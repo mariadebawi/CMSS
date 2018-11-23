@@ -1,10 +1,11 @@
 <?php 
-include "includes/header.php";
+include "../includes/db.php";
+include "includes/admin_header.php";
 ?>
     <div id="wrapper">
         <!-- Navigation -->
         <?php 
-      include "includes/navigation.php";
+      include "includes/admin_navigation.php";
        ?>
         <div id="page-wrapper">
             <div class="container-fluid">
@@ -25,6 +26,6 @@ include "includes/header.php";
     </div>
     <!-- /#wrapper -->
 <?php 
-include "includes/footer.php";
+include "includes/admin_footer.php";
 ?>
 </html>
