@@ -32,7 +32,7 @@
               echo "<td>{$post_author}</td>";
               echo "<td>$post_title</td>";
 
-
+            /********************* Jointure entre posts and category  *******/
               $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
               $edit_cat = mysqli_query($connection, $query);
               while ($row = mysqli_fetch_assoc($edit_cat)) {

@@ -13,14 +13,17 @@ include "includes/navigation.php";
             <!-- Blog Entries Column -->
             <div class="col-md-8">
             <?php 
-              $query = "SELECT * FROM posts" ;
+            if(isset($_GET['category'])){
+               $id_cat = $_GET['category'] ;
+              
+              $query = "SELECT * FROM posts WHERE post_category_id = $id_cat " ;
               $dispalay_all_posts = mysqli_query($connection , $query);
                while($row = mysqli_fetch_assoc($dispalay_all_posts)){
                    $post_id = $row['post_id'] ;
                    $post_title = $row['post_title'] ;
                    $post_author = $row['post_author'] ;
                    $post_date = $row['poste_date'] ;
-                   $post_content = substr($row['post_content'],0,30 );
+                   $post_content = substr($row['post_content'],0,100 );
                    $post_img = $row['post_image'] ;
                    ?>
            <h1 class="page-header">
@@ -42,7 +45,7 @@ include "includes/navigation.php";
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                <?php 
-               }
+               }}
              ?>
                 
             </div>

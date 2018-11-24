@@ -27,7 +27,8 @@
             $dispalay_all = mysqli_query($connection, $query);
             while ($row = mysqli_fetch_assoc($dispalay_all)) {
                 $cat_title = $row['cat_title'];
-                echo "<li><a href='#'>{$cat_title}</a></li>";
+                $c_id = $row['cat_id'];
+                echo "<li><a href='category.php?category=$c_id'>{$cat_title}</a></li>";
             }
             ?>
             </ul>

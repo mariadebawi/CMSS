@@ -2,6 +2,7 @@
 
         <?php 
         if (isset($_POST['create_post'])) {
+            
             $post_title = $_POST['title'];
             $post_author = $_POST['author'];
             $poste_date = date('y-m-d');
@@ -11,7 +12,7 @@
 
             $post_tags = $_POST['post_tags'];
             $post_status = $_POST['post_status'];
-            $post_category_id = $_POST['post_category_id'];
+            $post_category_id = $_POST['post_category'];
             $post_content = $_POST['post_content'];
             $post_comment_count = 4;
 
@@ -32,8 +33,17 @@
      </div>
       
      <div class="form-group">
-        <label for="title">categorie</label>
-         <input type="text" class="form-control" name="post_category_id">
+     <select class="form-control " name="post_category" id="">
+          <?php 
+            $query = "SELECT * FROM categories";
+            $dispalay_all = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($dispalay_all)) {
+                $cat_title = $row['cat_title'];
+                $cat_id = $row['cat_id'];
+                echo "<option value='$cat_id'> {$cat_title} </option>" ;
+            }
+            ?>
+        </select>
      </div>  
        
      <div class="form-group">
@@ -62,8 +72,7 @@
      </div>
      <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control "name="post_content" id="" cols="30" rows="10">
-        </textarea>
+        <textarea class="form-control "name="post_content" id="" cols="" rows=""></textarea>
      </div>
       <div class="form-group">
          <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">
