@@ -5,30 +5,24 @@
             $post_title = $_POST['title'];
             $post_author = $_POST['author'];
             $poste_date = date('y-m-d');
+
             $post_image = $_FILES['image']['name'];
             $post_image_temp = $_FILES['image']['tmp_name'];
+
             $post_tags = $_POST['post_tags'];
             $post_status = $_POST['post_status'];
             $post_category_id = $_POST['post_category_id'];
             $post_content = $_POST['post_content'];
             $post_comment_count = 4;
 
-            move_uploaded_file($post_image_temp, '../images/$post_image');
-
-            $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status) VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count }','{$post_status}')";
+            move_uploaded_file($post_image_temp, "./images/$post_image");
+       
+            $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status) VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')";
             $add_post_query = mysqli_query($connection, $query);
             if (!$add_post_query) {
                 die("QUERY FAILED" . mysqli_error($connection));
-            }
-            else {
-                echo "work" ;
-            }
+            } 
         }
-
-
-
-
-
 
         ?>                
   <form action="" method="post" enctype="multipart/form-data">    

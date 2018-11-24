@@ -76,9 +76,6 @@ function show_all_posts()
         echo "<td>{$post_tags}</td>";
         echo "<td>{$post_comment_count}</td>";
         echo "<td>{$poste_date}</td>";
-
-
-
         /*
         echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
         echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
