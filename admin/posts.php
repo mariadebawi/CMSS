@@ -1,7 +1,7 @@
 <?php 
 include "../includes/db.php";
 include "includes/admin_header.php";
-include "includes/functions.php";
+
 
 ?>
     <div id="wrapper">
@@ -19,26 +19,36 @@ include "includes/functions.php";
                             Welcome to Admin
                             <small>Author</small>
                 </h1>
-  <table class="table table-bordered table-hover">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Author</th>
-              <th>Title</th>
-              <th>Categorie</th>
-              <th>Status</th>
-              <th>Image</th>
-              <th>Tags</th>
-              <th>Comment</th>
-              <th>Date</th>
-          </tr>
-      </thead>
-      <tbody>
-      <?php
-          show_all_posts() ;
-       ?>
-      </tbody>
-  </table>
+           <!-- table !-->
+             <?php 
+             
+            if (isset($_GET['source'])) {
+            $source = $_GET['source'] ;
+            }
+            else {
+                $source = '' ;
+            }
+            
+                switch ($source) {
+                    case 'add_post' ;
+                    include "includes/add_post.php";
+                    break;
+                    case 'edit_post' ;
+                    include "includes/edit_post.php";
+                    break;
+                            case '40';
+                            echo 'ok';
+                            break;
+                                default:
+                                    include "includes/view_all_posts.php";
+                                    break;
+
+    
+}
+
+
+
+?>
                  </div>
                </div>
                 <!-- /.row -->
