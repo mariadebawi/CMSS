@@ -110,7 +110,26 @@ include "includes/db.php";
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                <?php 
-               }}
+               }
+               if(isset($_POST['create_comment'])){ 
+                $comment_post_id = $_GET['p_id']; 
+                $comment_author = $_POST['author']; 
+                $comment_date = date('y-m-d'); 
+                $comment_email =$_POST['email']; 
+            //    $comment_status = $_POST['comment_status']; 
+                $comment_content= $_POST['comment_content'];
+
+                $query = "INSERT INTO comments(comment_post_id ,comment_author ,comment_email,comment_content ,comment_status,comment_date) VALUES('{$comment_post_id}','{$comment_author}','$comment_email','{$comment_content}','Unapprove',now())";
+                $add_comment_query = mysqli_query($connection, $query);
+                if (!$add_comment_query) {
+                    die("QUERY FAILED" . mysqli_error($connection));
+                } 
+                else {
+                    echo "work fine"  ;
+                }
+            }
+   
+            }
              ?>
                 
             </div>
@@ -177,13 +196,23 @@ include "includes/db.php";
 
         <hr>
   <!-- Comments Form -->
+
   <div class="well">
                     <h4>Leave a Comment:</h4>
-                    <form role="form">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                    <form role="form" action="" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                    <label for="author">Author</label>
+                     <input type="text" class="form-control" name="author" id="">
+                    </div>   
+                         <div class="form-group">
+                         <label for="author">email</label>
+                          <input type="text" class="form-control" name="email" id="">       
+                         </div>   
+                         <div class="form-group">
+                         <label for="comment">Your Comment</label>
+                         <textarea name="comment_content"  class="form-control" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="create_comment" class="btn btn-primary">Comment</button>
                     </form>
                 </div>
 

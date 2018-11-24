@@ -30,13 +30,13 @@ include "includes/admin_header.php";
             }
             
                 switch ($source) {
-                    case 'add_post' ;
+                    case 'view_all_comments' ;
                     include "includes/add_post.php";
                     break;
                     case 'edit_post' ;
                     include "includes/edit_post.php";
                     break;
-                    default:
+                                default:
                                     include "includes/view_all_comments.php";
                                     break;
 
