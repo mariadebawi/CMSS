@@ -94,7 +94,7 @@
             ?>
         </select>
      </div>  
-     
+     cccccccccccccccc
    <div class="form-group">
         <label for="post_image">Post Image</label>
         <img width='100' class='img-responsive' src='./images/<?php echo $post_image ; ?>' alt='image'>
