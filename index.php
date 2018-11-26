@@ -24,11 +24,7 @@ include "includes/navigation.php";
                    $post_img = $row['post_image'] ;
                    $post_status = $row['post_status'] ;
                    
-                   if($post_status !== 'published'){
-                       echo "<h1> SORRY NO POST</h1>" ;
-                   }
-                   else {
-
+                   if($post_status === 'published')
                    ?>
            <h1 class="page-header">
                     Page Heading
@@ -46,10 +42,9 @@ include "includes/navigation.php";
                 <img class="img-responsive" src="images/<?php echo $post_img ;?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                <?php 
-               }}
+               }
              ?>
                 
             </div>

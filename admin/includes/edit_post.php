@@ -80,11 +80,21 @@
         <label for="title">Post Author</label>
          <input type="text"  value="<?php  {echo $post_author ;} ?>" class="form-control" name="author">
      </div> 
-      <div class="form-group">
-      <label for="post_content">Post status</label>
-      <input type="text"  value="<?php  {echo  $post_status;} ?>" class="form-control" name="post_status">
+     <div class="form-group ">
+        <select class="form-control " name="post_status" id="">
+          <option value=''> <?php echo $post_status ; ?> </option>" ;
 
-     </div>
+          <?php 
+               if($post_status === 'published'){
+                echo "<option value='draft'> Draft </option>" ;
+               }
+               else {
+                echo "<option value='published'> Published </option>" ;
+               }
+            ?>
+        </select>
+     </div>  
+     
    <div class="form-group">
         <label for="post_image">Post Image</label>
         <img width='100' class='img-responsive' src='./images/<?php echo $post_image ; ?>' alt='image'>

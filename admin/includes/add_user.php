@@ -9,15 +9,20 @@
             $user_email = $_POST['email'];
             $user_role = $_POST['user_role'];
 
-
+            if ($username == "" || empty($username) && $user_firstname == "" || empty($user_firstname) && $user_lastname == "" || empty($user_lastname) && $user_email == "" || empty($user_email) &&  $user_password == "" || empty($user_password) && $user_role == "" || empty($user_role)) {
+                echo "this field shoud not be empty";
+            } 
+            else {
             $query_add = "INSERT INTO users (username , user_password , user_firstname ,user_lastname ,user_email ,user_image ,user_role ,randSalt) VALUES('{$username}','{$user_password}','{$user_firstname}','{$user_lastname}','{$user_email}','','{$user_role}','')";
             $add_user_query = mysqli_query($connection, $query_add);
             if (!$add_user_query) {
                 die("QUERY FAILED" . mysqli_error($connection));
             }
             else {
-                echo "ok" ;
+               echo "User Created : " . "" ."<a href='./users.php'> View All users</a>" ;
             }
+            }
+           
         }
 
         ?>  
@@ -57,7 +62,7 @@
      </div>
      <div class="form-group">
         <label for="email">Password</label>
-        <input type="text" class="form-control" name="password">
+        <input type="password" class="form-control" name="password">
      </div>
   
       <div class="form-group">
