@@ -14,7 +14,7 @@
             $post_status = $_POST['post_status'];
             $post_category_id = $_POST['post_category'];
             $post_content = $_POST['post_content'];
-            $post_comment_count = 4;
+            $post_comment_count = 0;
 
             move_uploaded_file($post_image_temp, "./images/$post_image");
        

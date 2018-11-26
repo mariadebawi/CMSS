@@ -22,6 +22,13 @@ include "includes/navigation.php";
                    $post_date = $row['poste_date'] ;
                    $post_content = substr($row['post_content'],0,30 );
                    $post_img = $row['post_image'] ;
+                   $post_status = $row['post_status'] ;
+                   
+                   if($post_status !== 'published'){
+                       echo "<h1> SORRY NO POST</h1>" ;
+                   }
+                   else {
+
                    ?>
            <h1 class="page-header">
                     Page Heading
@@ -42,7 +49,7 @@ include "includes/navigation.php";
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                <?php 
-               }
+               }}
              ?>
                 
             </div>
