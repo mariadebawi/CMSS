@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -21,12 +22,21 @@
                    echo "<li><a href='#'>{$cat_title}</a></li>" ;
                }
 
-                  ?>
+            //p_id
+               if(isset($_SESSION['username'])){
+                  if(isset($_GET['p_id'])){
+                   $the_post_id = isset($_GET['p_id']) ;
+                   echo "<h1>$the_post_id</h1>" ;
+                   //echo "<li> <a href='admin/posts.php?source=edit_post&id_p={$post_id}'>Edit Post</a> </li>" ;
+             }}
+        ?>
+                    <?php  
+                     if(isset($_SESSION['username'])){
 
-             
-                    <li>
-                        <a href="admin">Admin</a>
-                    </li>
+                       echo "<li> <a href='admin'>Admin</a> </li>" ;
+                    }
+                    ?>
+                      
                        <!--
                     <li>
                         <a href="#">Services</a>

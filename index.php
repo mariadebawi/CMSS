@@ -20,10 +20,9 @@ include "includes/navigation.php";
                    $post_title = $row['post_title'] ;
                    $post_author = $row['post_author'] ;
                    $post_date = $row['poste_date'] ;
-                   $post_content = substr($row['post_content'],0,30 );
+                   $post_content = substr($row['post_content'],0,30);
                    $post_img = $row['post_image'] ;
                    $post_status = $row['post_status'] ;
-                   
                    if($post_status === 'published')
                    ?>
            <h1 class="page-header">
@@ -39,9 +38,13 @@ include "includes/navigation.php";
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
+                <a href="post.php?p_id=<?php echo $post_id ; ?>">
                 <img class="img-responsive" src="images/<?php echo $post_img ;?>" alt="">
+                </a>
                 <hr>
                 <p><?php echo $post_content ?></p>
+                <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
                 <hr>
                <?php 
                }

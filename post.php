@@ -1,11 +1,6 @@
-<?php 
+<?php session_start(); ?>
+<?php include "includes/db.php"; ?>
 
-// Navigation 
-include "includes/db.php";
-
-
-
-?>
 
 
 
@@ -50,20 +45,39 @@ include "includes/db.php";
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Start Bootstrap</a>
+                <a class="navbar-brand" href="../index.php">CMS FRONT</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
+                  <?php 
+                    $query = "SELECT * FROM categories";
+                    $dispalay_all = mysqli_query($connection, $query);
+                    while ($row = mysqli_fetch_assoc($dispalay_all)) {
+                        $cat_title = $row['cat_title'];
+                        echo "<li><a href='#'>{$cat_title}</a></li>";
+                    }
+
+            //p_id
+                    if (isset($_SESSION['username'])) {
+                        if (isset($_GET['p_id'])) {
+                            $the_pst_id = $_GET['p_id'];
+                            echo "<li> <a href='admin/posts.php?source=edit_post&id_p={$the_pst_id}'>Edit Post</a> </li>";
+                        }
+                    }
+                    ?>
+                    <?php 
+                    if (isset($_SESSION['username'])) {
+
+                        echo "<li> <a href='admin'>Admin</a> </li>";
+                    }
+                    ?>
+
+                      <!--
                     <li>
                         <a href="#">Contact</a>
                     </li>
+                    !-->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -78,19 +92,19 @@ include "includes/db.php";
 
               <div class="col-md-8">
             <?php 
-            if(isset($_GET['p_id'])) {
-             $the_post_id = $_GET['p_id'];
-              $query = "SELECT * FROM posts WHERE post_id = $the_post_id  " ;
-              $dispalay_all_posts_id = mysqli_query($connection , $query);
-               while($row = mysqli_fetch_assoc($dispalay_all_posts_id)){
-                   $post_id = $row['post_id'] ;
-                   $post_title = $row['post_title'] ;
-                   $post_author = $row['post_author'] ;
-                   $post_date = $row['poste_date'] ;
-                   $post_content = $row['post_content'] ;
-                   $post_img = $row['post_image'] ;
-               
-                   ?>
+            if (isset($_GET['p_id'])) {
+                $the_post_id = $_GET['p_id'];
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id  ";
+                $dispalay_all_posts_id = mysqli_query($connection, $query);
+                while ($row = mysqli_fetch_assoc($dispalay_all_posts_id)) {
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    $post_author = $row['post_author'];
+                    $post_date = $row['poste_date'];
+                    $post_content = $row['post_content'];
+                    $post_img = $row['post_image'];
+
+                    ?>
            <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
@@ -104,39 +118,41 @@ include "includes/db.php";
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_img ;?>" alt="">
+                <img class="img-responsive" src="images/<?php echo $post_img; ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                <?php 
-               }
+            }
 
-               if(isset($_POST['create_comment'])){ 
-                $comment_post_id = $_GET['p_id']; 
-                $comment_author = $_POST['author']; 
-                $comment_date = date('y-m-d'); 
-                $comment_email =$_POST['email']; 
+
+
+            if (isset($_POST['create_comment'])) {
+                $comment_post_id = $_GET['p_id'];
+                $comment_author = $_POST['author'];
+                $comment_date = date('y-m-d');
+                $comment_email = $_POST['email']; 
             //    $comment_status = $_POST['comment_status']; 
-                $comment_content= $_POST['comment_content'];
+                $comment_content = $_POST['comment_content'];
+                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
 
-                $query = "INSERT INTO comments(comment_post_id ,comment_author ,comment_email,comment_content ,comment_status,comment_date) VALUES('{$comment_post_id}','{$comment_author}','$comment_email','{$comment_content}','Unapprove',now())";
-                $add_comment_query = mysqli_query($connection, $query);
-                if (!$add_comment_query) {
-                    die("QUERY FAILED" . mysqli_error($connection));
-                } 
-                $query_update = "UPDATE posts SET post_comment_count = post_comment_count +1 WHERE post_id = {$the_post_id} " ;
-                
-                $add_comment_query_count = mysqli_query($connection, $query_update);
-                if (!$add_comment_query_count) {
-                    die("QUERY FAILED" . mysqli_error($connection));
-                } 
+                    $query = "INSERT INTO comments(comment_post_id ,comment_author ,comment_email,comment_content ,comment_status,comment_date) VALUES('{$comment_post_id}','{$comment_author}','$comment_email','{$comment_content}','Unapprove',now())";
+                    $add_comment_query = mysqli_query($connection, $query);
+                    if (!$add_comment_query) {
+                        die("QUERY FAILED" . mysqli_error($connection));
+                    }
+                    $query_update = "UPDATE posts SET post_comment_count = post_comment_count +1 WHERE post_id = {$the_post_id} ";
 
-             
+                    $add_comment_query_count = mysqli_query($connection, $query_update);
+                    if (!$add_comment_query_count) {
+                        die("QUERY FAILED" . mysqli_error($connection));
+                    }
+                } else {
+                    echo "<script> alert('Filed cannot be empty')</script>";
+                }
             }
-   
-            }
-             ?>
+        }
+        ?>
                 
             </div>
 
@@ -230,14 +246,14 @@ include "includes/db.php";
                 <?php 
                // echo $comment_post_id ;
 
-                 $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} AND comment_status = 'approve' ORDER BY comment_id DESC";
-                 $display_comment = mysqli_query($connection, $query);
-                 while ($row = mysqli_fetch_assoc($display_comment)) {
-                     
-                    $comment_author = $row['comment_author']; 
-                    $comment_date =  $row['comment_date'];
+                $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} AND comment_status = 'approve' ORDER BY comment_id DESC";
+                $display_comment = mysqli_query($connection, $query);
+                while ($row = mysqli_fetch_assoc($display_comment)) {
+
+                    $comment_author = $row['comment_author'];
+                    $comment_date = $row['comment_date'];
                     $comment_content = $row['comment_content'];
-                ?>
+                    ?>
 
                 <!-- Comment -->
                 <div class="media">
@@ -246,18 +262,19 @@ include "includes/db.php";
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading"><?php echo $comment_author; ?>
-                            <small><?php echo  $comment_date;  ?></small>
+                            <small><?php echo $comment_date; ?></small>
                         </h4>
-                        <?php echo $comment_content ; ?>
+                        <?php echo $comment_content; ?>
                     </div>
                 </div>
 
-      <?php }  ?>
+      <?php 
+    } ?>
         <!-- Footer -->
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; Your Website 2018</p>
                 </div>
             </div>
             <!-- /.row -->

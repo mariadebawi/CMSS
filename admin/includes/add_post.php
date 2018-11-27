@@ -20,9 +20,13 @@
        
             $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status) VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')";
             $add_post_query = mysqli_query($connection, $query);
+            $the_post_id = mysqli_insert_id($connection) ;
             if (!$add_post_query) {
                 die("QUERY FAILED" . mysqli_error($connection));
             } 
+            else {
+                echo "<p class='bg-success'>Post Created .<a href='../post.php?p_id={$the_post_id}'>View this post ? </a>  or <a href='posts.php?source=edit_post&id_p={$the_post_id}'> edit it ? </a> </p>" ;
+            }
         }
 
         ?>                
@@ -32,7 +36,7 @@
          <input type="text" class="form-control" name="title">
      </div>
       
-     <div class="form-group">
+     <div class="form-group ">
      <select class="form-control " name="post_category" id="">
           <?php 
             $query = "SELECT * FROM categories";
@@ -56,11 +60,16 @@
         <label for="title">Post Author</label>
          <input type="text" class="form-control" name="author">
      </div> 
-      <div class="form-group">
-      <label for="post_content">Post status</label>
-      <input type="text" class="form-control" name="post_status">
 
-     </div>
+      <div class="form-group  ">
+      <label for="post_status">Post status </label>
+        <select class="form-control " name="post_status" id="">
+           <option value="draft">Select Options</option>
+           <option value="published">publish</option>
+           <option value="draft">draft</option>
+        </select>
+     </div>  
+
    <div class="form-group">
         <label for="post_image">Post Image</label>
          <input type="file"  name="image">
@@ -72,7 +81,7 @@
      </div>
      <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control "name="post_content" id="" cols="" rows=""></textarea>
+        <textarea class="form-control "name="post_content" id="body" cols="" rows=""></textarea>
      </div>
       <div class="form-group">
          <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">

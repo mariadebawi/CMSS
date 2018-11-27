@@ -153,7 +153,7 @@ $category_count = mysqli_num_rows($select_all_categories);
                 <!--  row 2-->
 
 <div class="row">
-    <script type="text/javascript">
+    <script>
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
 
@@ -169,6 +169,10 @@ $category_count = mysqli_num_rows($select_all_categories);
             $select_draft_posts = mysqli_query($connection, $query_draft);
             $post_draft_count = mysqli_num_rows($select_draft_posts);
 
+            /******** number of publish posts */
+            $query_publish = "SELECT * FROM posts WHERE post_status = 'published'";
+            $select_publish_posts = mysqli_query($connection, $query_publish);
+            $post_publish_count = mysqli_num_rows($select_publish_posts);
 
             /******** number of unapprove comments */
             $query_unapprove = "SELECT * FROM comments WHERE comment_status = 'unapprove'";
@@ -183,10 +187,10 @@ $category_count = mysqli_num_rows($select_all_categories);
             $user_subscriber_count = mysqli_num_rows($select_subscriber_users);
 
 
-            $element_text = ['Active Posts', 'Draft Posts' ,'Comments', 'Pending Comments' ,'Users','Subscribers' ,'Categories' ];
-            $element_count = [$post_count, $post_draft_count , $comment_count , $comment_Unapprove_count , $user_count , $user_subscriber_count , $category_count];
+            $element_text = ['Active Posts','Publish Post', 'Draft Posts' ,'Comments', 'Pending Comments' ,'Users','Subscribers' ,'Categories' ];
+            $element_count = [$post_count,$post_publish_count, $post_draft_count , $comment_count , $comment_Unapprove_count , $user_count , $user_subscriber_count , $category_count];
 
-            for ($i = 0; $i < 7; $i++) {
+            for ($i = 0; $i < 8; $i++) {
                 echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}] ,";
             }
 

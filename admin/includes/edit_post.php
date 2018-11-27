@@ -80,7 +80,8 @@
         <label for="title">Post Author</label>
          <input type="text"  value="<?php  {echo $post_author ;} ?>" class="form-control" name="author">
      </div> 
-     <div class="form-group ">
+     <div class="form-group  ">
+     <label for="post_status">Post status </label>
         <select class="form-control " name="post_status" id="">
           <option value=''> <?php echo $post_status ; ?> </option>" ;
 
@@ -94,7 +95,7 @@
             ?>
         </select>
      </div>  
-     cccccccccccccccc
+     
    <div class="form-group">
         <label for="post_image">Post Image</label>
         <img width='100' class='img-responsive' src='./images/<?php echo $post_image ; ?>' alt='image'>
@@ -108,7 +109,7 @@
      </div>
      <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control "   name="post_content" id="" cols="30" rows="10"><?php echo  $post_content ; ?></textarea>
+        <textarea class="form-control "   name="post_content" id="body" cols="30" rows="10"><?php echo  $post_content ; ?></textarea>
      </div>
       <div class="form-group">
          <input class="btn btn-success" type="submit" name="edit_post" value="Edit_Post">
