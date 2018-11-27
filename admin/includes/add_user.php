@@ -13,7 +13,7 @@
                 echo "this field shoud not be empty";
             } 
             else {
-            $query_add = "INSERT INTO users (username , user_password , user_firstname ,user_lastname ,user_email ,user_image ,user_role ,randSalt) VALUES('{$username}','{$user_password}','{$user_firstname}','{$user_lastname}','{$user_email}','','{$user_role}','')";
+            $query_add = "INSERT INTO users (username , user_password , user_firstname ,user_lastname ,user_email ,user_image ,user_role ) VALUES('{$username}','{$user_password}','{$user_firstname}','{$user_lastname}','{$user_email}','','{$user_role}')";
             $add_user_query = mysqli_query($connection, $query_add);
             if (!$add_user_query) {
                 die("QUERY FAILED" . mysqli_error($connection));
