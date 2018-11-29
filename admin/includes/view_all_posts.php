@@ -25,10 +25,33 @@
                header("Location:posts.php");
 
                break ;
+               case 'clone' :
+               $query = "SELECT * FROM posts WHERE  post_id = {$checkBoxValue} ";
+              $dispalay_all_post = mysqli_query($connection, $query);
+              while ($row = mysqli_fetch_assoc($dispalay_all_post)) {
+              $p_id = $row['post_id'];
+              $p_title = $row['post_title']; 
+              $p_author = $row['post_author']; 
+              $p_date = $row['poste_date']; 
+              $p_image = $row['post_image']; 
+              $p_tags = $row['post_tags']; 
+              $p_status= $row['post_status'];
+              $p_category_id = $row['post_category_id']; 
+              $p_comment_count = $row['post_comment_count']; 
+              }
+               $query_clone = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status) VALUES('{$p_category_id}','{$p_title}','{$p_author}',now(),'{$p_image}','{$p_content}','{$p_tags}','{$p_comment_count}','{$p_status}')";
+               $clone_post_query = mysqli_query($connection, $query_clone);
+               header("Location:posts.php");
+               if (!$clone_post_query) {
+                  die("QUERY FAILED" . mysqli_error($connection));
+               }
+               break ;
+
            }
      
   }
   }
+  
 
  
 
@@ -43,6 +66,8 @@
            <option value="published">publish</option>
            <option value="draft">draft</option>
            <option value="delete">delete</option>
+           <option value="clone">clone</option>
+
         </select>
      </div>  
   </div>
@@ -66,11 +91,13 @@
               <th>View Post</th>
               <th>Delete</th>
               <th>Edit</th>
+              <th>Views</th>
+
           </tr>
       </thead>
       <tbody>
       <?php
-          $query = "SELECT * FROM posts";
+          $query = "SELECT * FROM posts ORDER BY post_id DESC";
           $dispalay_all_post = mysqli_query($connection, $query);
           while ($row = mysqli_fetch_assoc($dispalay_all_post)) {
               $post_id = $row['post_id'];
@@ -82,6 +109,8 @@
               $post_status= $row['post_status'];
               $post_category_id = $row['post_category_id']; 
               $post_comment_count = $row['post_comment_count']; 
+              $post_views_count = $row['post_view_count']; 
+
             
               echo "<tr>";
               ?>
@@ -108,6 +137,8 @@
               echo "<td><a href='../post.php?p_id={$post_id}'>View</a></td>";
               echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
               echo "<td><a href='posts.php?source=edit_post&id_p={$post_id}'>Edit</a></td>";
+              echo "<td><a href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
+
               echo "</tr>";
           }
        ?>
@@ -123,6 +154,22 @@
        
        
        ?>
+
+
+       
+       <?php   
+
+        if (isset($_GET['reset'])) {
+            $the_p_id = $_GET['reset'];
+            $reset_query = "UPDATE posts SET post_view_count = 0 WHERE post_id = {$the_p_id}" ;
+            $reset_post_query = mysqli_query($connection, $reset_query);
+            header("Location:posts.php");
+        }
+       
+       
+       ?>
+
+       
       </tbody>
   </table>
   </form>

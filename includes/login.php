@@ -24,7 +24,7 @@
         $db_randSalt= $row['randSalt'];
      }
 
-    if($username === $db_username && $password === $db_user_password){
+    if(password_verify($password , $db_user_password)){
         header("Location:../admin") ;
         $_SESSION['id_user'] = $db_user_id ;
         $_SESSION['username'] = $db_username ;

@@ -8,6 +8,7 @@
             $user_password = $_POST['password'];
             $user_email = $_POST['email'];
             $user_role = $_POST['user_role'];
+          
 
             if ($username == "" || empty($username) && $user_firstname == "" || empty($user_firstname) && $user_lastname == "" || empty($user_lastname) && $user_email == "" || empty($user_email) &&  $user_password == "" || empty($user_password) && $user_role == "" || empty($user_role)) {
                 echo "this field shoud not be empty";

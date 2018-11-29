@@ -14,33 +14,30 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                  <?php 
+             
+            <?php 
               $query = "SELECT * FROM categories" ;
               $dispalay_all = mysqli_query($connection , $query);
                while($row = mysqli_fetch_assoc($dispalay_all)){
                    $cat_title = $row['cat_title'] ;
                    echo "<li><a href='#'>{$cat_title}</a></li>" ;
                }
+               ?>
+               <?php  
+                     if(!isset($_SESSION['username'])){
 
-            //p_id
-               if(isset($_SESSION['username'])){
-                  if(isset($_GET['p_id'])){
-                   $the_post_id = isset($_GET['p_id']) ;
-                   echo "<h1>$the_post_id</h1>" ;
-                   //echo "<li> <a href='admin/posts.php?source=edit_post&id_p={$post_id}'>Edit Post</a> </li>" ;
-             }}
-        ?>
+                       echo "<li> <a href='registration.php'>Registration</a> </li>" ;
+                    }
+                    ?>
+      
                     <?php  
                      if(isset($_SESSION['username'])){
 
                        echo "<li> <a href='admin'>Admin</a> </li>" ;
                     }
                     ?>
-                      
-                       <!--
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
+                 
+                    <!--
                     <li>
                         <a href="#">Contact</a>
                     </li>

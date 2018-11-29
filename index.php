@@ -4,16 +4,36 @@ include "includes/header.php";
 // Navigation 
 include "includes/db.php";
 include "includes/navigation.php";
-
-
 ?>
+
   <!-- Page Content -->
     <div class="container">
         <div class="row">
             <!-- Blog Entries Column -->
             <div class="col-md-8">
             <?php 
-              $query = "SELECT * FROM posts" ;
+            $page_limit = 2 ;
+              if(isset($_GET['page'])){
+                  $page = $_GET['page'] ;
+              }
+              else {
+                  $page = "" ;
+              }
+
+             if($page == "" || $page == 1){
+                 $page_1 = 0 ;
+             }
+             else {
+                 $page_1 = ($page * 5) - 5 ; 
+            }
+
+
+                $query_count = "SELECT * FROM posts" ;
+                $find_count = mysqli_query($connection , $query_count);
+                $post_count = mysqli_num_rows($find_count) ;
+                $post_count = ceil ($post_count / 5 );
+
+              $query = "SELECT * FROM posts LIMIT {$page_1} , {$page_limit}" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
                while($row = mysqli_fetch_assoc($dispalay_all_posts)){
                    $post_id = $row['post_id'] ;
@@ -34,7 +54,7 @@ include "includes/navigation.php";
                     <a href="post.php?p_id=<?php echo $post_id ; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author ?></a>
+                    by <a href="author_post.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id;?>"> <?php echo $post_author ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
@@ -58,6 +78,24 @@ include "includes/navigation.php";
         </div>
         <!-- /.row -->
         <hr>
+       <!--  Pagination -->
+        <ul class="pager">
+        <?php
+           for($i = 1 ; $i <= $post_count ; $i++){
+               if($i == $page){
+                echo "<li ><a class='active' href='index.php?page={$i}'>$i</a></li>" ;
+               }
+               else{
+               echo "<li ><a href='index.php?page={$i}'>$i</a></li>" ;
+           }
+        }
+        ?>
+        </ul>
+
+
+
+
+
         <!-- Footer -->
         <?php 
         include "includes/footer.php";

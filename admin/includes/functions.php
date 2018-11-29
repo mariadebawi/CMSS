@@ -4,6 +4,34 @@ include "../includes/db.php";
 ?>
 
 <?php
+
+function users_online(){
+    global $connection;
+
+        $session = session_id() ;
+        $time = time() ;
+        $time_out_in_secend = 05 ;
+        $time_out = $time - $time_out_in_secend ;
+
+        $query_online = "SELECT * FROM online_users WHERE session = '$session'" ;
+        $get_online_user = mysqli_query($connection , $query_online);
+        $online_count = mysqli_num_rows($get_online_user) ;
+
+        if($online_count == null) {
+            $query_insert = "INSERT INTO online_users(session,time) VALUES ('$session','$time')" ;
+            $insert_online_user = mysqli_query($connection , $query_insert);
+        }
+        else {
+            mysqli_query($connection , "UPDATE online_users SET time = '$time' WHERE session = '$session'");
+        }
+
+        $find_online_user = mysqli_query($connection , "SELECT * FROM online_users WHERE time < '$time_out'");
+        return $count_online_user= mysqli_num_rows($find_online_user) ;
+
+}
+
+
+
 function insert_categories()
 {
     global $connection;
@@ -50,39 +78,7 @@ function delete_cat()
 }
 
 
-function show_all_posts()
-{
-    global $connection;
-    $query = "SELECT * FROM posts";
-    $dispalay_all_post = mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_assoc($dispalay_all_post)) {
-        $post_id = $row['post_id'];
-        $post_title = $row['post_title']; 
-        $post_author = $row['post_author']; 
-        $poste_date = $row['poste_date']; 
-        $post_image = $row['post_image']; 
-        $post_tags = $row['post_tags']; 
-        $post_status= $row['post_status'];
-        $post_category_id = $row['post_category_id']; 
-        $post_comment_count = $row['post_comment_count']; 
-      
-        echo "<tr>";
-        echo "<td>$post_id</td>";
-        echo "<td>{$post_author}</td>";
-        echo "<td>$post_title</td>";
-        echo "<td>{$post_category_id}</td>";
-        echo "<td>{$post_status}</td>";
-        echo "<td> <img width='100' class='img-responsive' src='../images/$post_image' alt='image'></td>";
-        echo "<td>{$post_tags}</td>";
-        echo "<td>{$post_comment_count}</td>";
-        echo "<td>{$poste_date}</td>";
-        /*
-        echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
-        echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
-        */
-        echo "</tr>";
-    }
-}   
+
 
 
 

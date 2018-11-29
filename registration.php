@@ -11,38 +11,49 @@
     <!-- Page Content -->
     <div class="container">
     <?php 
+    $message = "" ; 
+
+      
       if(isset($_POST['resgister'])){
         $username = $_POST['username'] ;
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
-   
+          
         /*****************  Protection  clean from the pile ********************/
-        $username = mysqli_real_escape_string($connection , $username) ;
+       $username = mysqli_real_escape_string($connection , $username) ;
         $email = mysqli_real_escape_string($connection , $email) ;
-        $password = mysqli_real_escape_string($connection , $password) ;
+       $password = mysqli_real_escape_string($connection , $password) ;
        
-        $query = "SELECT randSalt FROM users ";
+   /*     $query = "SELECT randSalt FROM users  ";
         $select_randSalt_query = mysqli_query($connection , $query) ;
           if(!$select_randSalt_query){
               die("query failed". mysqli_error($connection)) ;
           }
 
         while($row = mysqli_fetch_array($select_randSalt_query)){
-          echo  $salt = $row['randSalt'] ;
+            $salt = $row['randSalt'] ;
+           $password = crypt($password , $salt) ;
+        }*/
+        $password = password_hash($password , PASSWORD_BCRYPT,array('cost'=>12)) ;
+        
+        if ($username == "" || empty($username)  && $email == "" || empty($email) &&  $password == "" || empty($password)) {
+            $message ="this field shoud not be empty";
+        } 
+        else{
+        $query_add = "INSERT INTO users (username , user_password , user_firstname ,user_lastname ,user_email ,user_image ,user_role ) VALUES('{$username}','{$password}','','','{$email}','','subscriber')";
+        $add_user_query = mysqli_query($connection, $query_add);
+        if (!$add_user_query) {
+            die("QUERY FAILED" . mysqli_error($connection));
         }
-
-
+        else {
+           $message = "ok";
+        }
+    }
 
       }
       
        
     ?>
-
-
-
-
-
-
 
 
 
@@ -55,7 +66,7 @@
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                        
-
+                        <h6 class="text-center"> <?php echo $message ;?></h6>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" >

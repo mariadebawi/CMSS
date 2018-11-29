@@ -94,12 +94,11 @@
             <?php 
             if (isset($_GET['p_id'])) {
                 $the_post_id = $_GET['p_id'];
-            $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}" ;
-            $count_view = mysqli_query($connection, $view_query);
+                $the_author = $_GET['author'];
 
-            $query = "SELECT * FROM posts WHERE post_id = $the_post_id  ";
-                $dispalay_all_posts_id = mysqli_query($connection, $query);
-                while ($row = mysqli_fetch_assoc($dispalay_all_posts_id)) {
+                $query_author = "SELECT * FROM posts WHERE post_author =  '{$the_author}' ";
+                $dispalay_all_posts_author = mysqli_query($connection, $query_author);
+                while ($row = mysqli_fetch_assoc($dispalay_all_posts_author)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
                     $post_author = $row['post_author'];
@@ -114,10 +113,10 @@
                 </h1>
                 <!-- First Blog Post -->
                 <h2>
-                    <a href="#"><?php echo $post_title ?></a>
+                    <a href="post.php?p_id=<?php echo $the_post_id ; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                by <a href="author_post.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id;?>"> <?php echo $post_author ?></a>
+                   All Post  by  <?php echo $post_author ?>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
@@ -130,30 +129,7 @@
 
 
 
-            if (isset($_POST['create_comment'])) {
-                $comment_post_id = $_GET['p_id'];
-                $comment_author = $_POST['author'];
-                $comment_date = date('y-m-d');
-                $comment_email = $_POST['email']; 
-            //    $comment_status = $_POST['comment_status']; 
-                $comment_content = $_POST['comment_content'];
-                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
-
-                    $query = "INSERT INTO comments(comment_post_id ,comment_author ,comment_email,comment_content ,comment_status,comment_date) VALUES('{$comment_post_id}','{$comment_author}','$comment_email','{$comment_content}','Unapprove',now())";
-                    $add_comment_query = mysqli_query($connection, $query);
-                    if (!$add_comment_query) {
-                        die("QUERY FAILED" . mysqli_error($connection));
-                    }
-                    $query_update = "UPDATE posts SET post_comment_count = post_comment_count +1 WHERE post_id = {$the_post_id} ";
-
-                    $add_comment_query_count = mysqli_query($connection, $query_update);
-                    if (!$add_comment_query_count) {
-                        die("QUERY FAILED" . mysqli_error($connection));
-                    }
-                } else {
-                    echo "<script> alert('Filed cannot be empty')</script>";
-                }
-            }
+           
         }
         ?>
                 
@@ -222,76 +198,6 @@
         <hr>
   <!-- Comments Form -->
 
-  <div class="well">
-                    <h4>Leave a Comment:</h4>
-                    <form role="form" action="" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                    <label for="author">Author</label>
-                     <input type="text" class="form-control" name="author" id="">
-                    </div>   
-                         <div class="form-group">
-                         <label for="author">email</label>
-                          <input type="text" class="form-control" name="email" id="">       
-                         </div>   
-                         <div class="form-group">
-                         <label for="comment">Your Comment</label>
-                         <textarea name="comment_content"  class="form-control" rows="3"></textarea>
-                        </div>
-                        <button type="submit" name="create_comment" class="btn btn-primary">Comment</button>
-                    </form>
-                </div>
-
-                <hr>
-
-                <!-- Posted Comments -->
-
-
-                <?php 
-               // echo $comment_post_id ;
-
-                $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} AND comment_status = 'approve' ORDER BY comment_id DESC";
-                $display_comment = mysqli_query($connection, $query);
-                while ($row = mysqli_fetch_assoc($display_comment)) {
-
-                    $comment_author = $row['comment_author'];
-                    $comment_date = $row['comment_date'];
-                    $comment_content = $row['comment_content'];
-                    ?>
-
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading"><?php echo $comment_author; ?>
-                            <small><?php echo $comment_date; ?></small>
-                        </h4>
-                        <?php echo $comment_content; ?>
-                    </div>
-                </div>
-
-      <?php 
-    } ?>
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2018</p>
-                </div>
-            </div>
-            <!-- /.row -->
-        </footer>
-
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-</body>
+ 
 
 </html>

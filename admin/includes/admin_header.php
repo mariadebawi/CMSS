@@ -1,6 +1,10 @@
 <?php ob_start() ;?>
 <?php session_start() ; ?>
-<?php include "../includes/db.php";?>
+<?php 
+include "../includes/db.php";
+include "functions.php";
+
+?>
   
 <?php 
   if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin'){
@@ -46,6 +50,37 @@
     <![endif]-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+
+
+<style>
+
+#load-screen {
+background: url(./images/header-back.png);
+position: fixed;
+z-index: 10000;
+top:0px;
+width: 100%;
+height: 1600px;
+}
+
+
+#loading {
+width: 500px;
+height: 500px;
+margin: 10% auto;
+background: url(./images/loader.gif);
+background-size: 40%;
+background-repeat: no-repeat;
+background-position: center;
+
+}
+
+
+
+
+
+
+</style>
 </head>
 
 <body>

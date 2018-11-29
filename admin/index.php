@@ -1,7 +1,10 @@
 <?php 
 include "../includes/db.php";
+include "includes/functions.php";
 include "includes/admin_header.php";
 ?>
+
+
     <div id="wrapper">
         <!-- Navigation -->
         <?php 
@@ -14,7 +17,7 @@ include "includes/admin_header.php";
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to Admin
-                            <small> <?php echo $_SESSION['username'] ?></small>
+                            <small> <?php echo $_SESSION['username'] ;?></small>
                         </h1>
 
                                

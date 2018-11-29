@@ -29,6 +29,22 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+<style>
+.pager li>a.active{
+  background : #000 !important ;
+}
+
+
+
+</style>
+
+
+
+
+
+
+
 </head>
 
 <body>
