@@ -45,6 +45,10 @@ include "includes/admin_header.php";
                     break;
 
 
+                    case 'post_comment' ;
+                    include "includes/post_comment.php";
+                    break;
+
                     default:
                      include "includes/view_all_posts.php";
                       break;

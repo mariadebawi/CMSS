@@ -28,6 +28,7 @@
               $user_email =$_POST['email']; 
               $user_role = $_POST['user_role'];
               $user_password= $_POST['password'];     
+              $user_password = password_hash($user_password, PASSWORD_BCRYPT,array('cost'=>12)) ;
 
                 $query_edit = "UPDATE users SET username= '{$username}',user_firstname= '{$user_firstname}',user_lastname= '{$user_lastname}', user_email= '{$user_email}', user_role= '{$user_role}',user_password = '{$user_password}' WHERE user_id='{$the_userr_id}'" ;
                 $edit_user_query = mysqli_query($connection, $query_edit);

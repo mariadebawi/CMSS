@@ -5,6 +5,8 @@
             
             $post_title = $_POST['title'];
             $post_author = $_POST['author'];
+            $post_username = $_POST['user'];
+
             $poste_date = date('y-m-d');
 
             $post_image = $_FILES['image']['name'];
@@ -18,7 +20,7 @@
 
             move_uploaded_file($post_image_temp, "./images/$post_image");
        
-            $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status) VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')";
+            $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status,post_user) VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}' ,'{$post_username}')";
             $add_post_query = mysqli_query($connection, $query);
             $the_post_id = mysqli_insert_id($connection) ;
             if (!$add_post_query) {
@@ -37,6 +39,7 @@
      </div>
       
      <div class="form-group ">
+     <label for="cat">Categorie</label>
      <select class="form-control " name="post_category" id="">
           <?php 
             $query = "SELECT * FROM categories";
@@ -48,12 +51,25 @@
             }
             ?>
         </select>
+     </div> 
+
+
+     <div class="form-group ">
+     <label for="cat">users</label>
+     <select class="form-control " name="user" id="">
+          <?php 
+            $query = "SELECT * FROM users";
+            $dispalay_all = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($dispalay_all)) {
+                $user_id = $row['user_id'];
+                $username = $row['username'];
+                echo "<option value=''>  </option>" ;
+                echo "<option value='{$username}'> {$username} </option>" ;
+            }
+            ?>
+        </select>
      </div>  
-       
-     <div class="form-group">
-        <label for="title">users</label>
-         <input type="text" class="form-control" name="users">
-     </div>
+    
     
 
    <div class="form-group">

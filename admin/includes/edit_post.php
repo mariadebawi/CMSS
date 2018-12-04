@@ -4,12 +4,14 @@
 
         if (isset($_GET['id_p'])) {
           $the_post_id = $_GET['id_p'] ;
+
           $query = "SELECT * FROM posts WHERE post_id =$the_post_id";
           $edit_post = mysqli_query($connection, $query);
           while ($row = mysqli_fetch_assoc($edit_post)) {
             $post_id = $row['post_id'];
             $post_title = $row['post_title']; 
-            $post_author = $row['post_author']; 
+            $post_author = $row['post_author'];
+            $post_user = $row['post_user'];  
             $poste_date = $row['poste_date']; 
             $post_image = $row['post_image']; 
             $post_tags = $row['post_tags']; 
@@ -18,6 +20,7 @@
             $post_comment_count = $row['post_comment_count']; 
             $post_content = $row['post_content'];
             }}
+
         ?>
 
          <?php 
@@ -40,7 +43,7 @@
     
                 move_uploaded_file($post_image_temp, "./images/$post_image");
            
-                $query = "UPDATE posts SET post_title='{$post_title}',post_author='{$post_author}',poste_date='{$poste_date}',post_status='{$post_status}',post_tags='{$post_tags}',post_comment_count='{$post_comment_count}',post_image='{$post_image}',poste_date= now(),post_content='{$post_content}',post_title='{$post_title}',post_category_id='{$post_category_id}'WHERE post_id='{$the_post_id}'" ;
+                $query = "UPDATE posts SET post_title='{$post_title}',post_author='{$post_author}',poste_date='{$poste_date}',post_status='{$post_status}',post_tags='{$post_tags}',post_comment_count='{$post_comment_count}',post_image='{$post_image}',poste_date= now(),post_content='{$post_content}',post_title='{$post_title}',post_category_id='{$post_category_id}' , post_user = '{$post_user}' WHERE post_id='{$the_post_id}'" ;
                 $edit_post_query = mysqli_query($connection, $query);
                 if (!$edit_post_query) {
                     die("QUERY FAILED" . mysqli_error($connection));
@@ -57,6 +60,7 @@
          <input type="text"  value="<?php  {echo $post_title;} ?>" class="form-control" name="title">
      </div>
      <div class="form-group ">
+     <label for="categorie">Categorie</label>
         <select class="form-control " name="post_category" id="">
           <?php 
             $query = "SELECT * FROM categories";
@@ -70,10 +74,21 @@
         </select>
      </div>  
       
-     <div class="form-group">
-        <label for="title">users</label>
-         <input type="text" class="form-control" name="users">
-     </div>
+     <div class="form-group ">
+     <label for="cat">users</label>
+     <select class="form-control " name="user" id="">
+      <?php  echo "<option value='{$post_user}'>{$post_user} </option>" ; ?>
+          <?php 
+            $query = "SELECT * FROM users";
+            $dispalay_all = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($dispalay_all)) {
+                $user_id = $row['user_id'];
+                $username = $row['username'];
+                echo "<option value='{$username}'> {$username} </option>" ;
+            }
+            ?>
+        </select>
+     </div>  
     
 
    <div class="form-group">

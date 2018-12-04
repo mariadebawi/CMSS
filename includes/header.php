@@ -34,16 +34,7 @@
 .pager li>a.active{
   background : #000 !important ;
 }
-
-
-
 </style>
-
-
-
-
-
-
 
 </head>
 

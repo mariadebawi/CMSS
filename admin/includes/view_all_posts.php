@@ -80,7 +80,7 @@
           <tr>
               <th><input id="selectAllBox" type="checkbox"></th>
               <th>ID</th>
-              <th>Author</th>
+              <th>user</th>
               <th>Title</th>
               <th>Categorie</th>
               <th>Status</th>
@@ -103,21 +103,37 @@
               $post_id = $row['post_id'];
               $post_title = $row['post_title']; 
               $post_author = $row['post_author']; 
+              $post_user = $row['post_user']; 
+
               $poste_date = $row['poste_date']; 
               $post_image = $row['post_image']; 
               $post_tags = $row['post_tags']; 
               $post_status= $row['post_status'];
               $post_category_id = $row['post_category_id']; 
-              $post_comment_count = $row['post_comment_count']; 
-              $post_views_count = $row['post_view_count']; 
 
-            
+
+            $query_count = "SELECT * from comments WHERE comment_post_id = {$post_id} ";
+            $comment_query_count = mysqli_query($connection, $query_count);
+            $row = mysqli_fetch_array($comment_query_count);
+            $comment_id = $row['comment_id'] ;
+
+            $count = mysqli_num_rows($comment_query_count) ;
+              $post_views_count = $count; 
+
+
               echo "<tr>";
               ?>
               <td> <input  class="checkBoxes" type="checkbox" name="checkBoxArray[]" value="<?php echo $post_id ; ?>"> </td>
               <?php
               echo "<td>$post_id</td>";
-              echo "<td>{$post_author}</td>";
+
+              if(!empty($post_author)){
+                echo "<td>{$post_author}</td>";
+              }
+              elseif(!empty($post_user)){
+                echo "<td>{$post_user}</td>";
+              }
+
               echo "<td>$post_title</td>";
 
             /********************* Jointure entre posts and category  *******/
@@ -132,7 +148,7 @@
               echo "<td>{$post_status}</td>";
               echo "<td> <img width='100' class='img-responsive' src='./images/$post_image' alt='image'></td>";
               echo "<td>{$post_tags}</td>";
-              echo "<td>{$post_comment_count}</td>";
+              echo "<td> <a href='posts.php?source=post_comment&id_pt={$post_id}'>{$count}</a></td>";
               echo "<td>{$poste_date}</td>";
               echo "<td><a href='../post.php?p_id={$post_id}'>View</a></td>";
               echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";

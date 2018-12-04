@@ -93,11 +93,11 @@
               <div class="col-md-8">
             <?php 
             if (isset($_GET['p_id'])) {
-                $the_post_id = $_GET['p_id'];
+                $the_post_id = $_GET['p_id']; 
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}" ;
             $count_view = mysqli_query($connection, $view_query);
 
-            $query = "SELECT * FROM posts WHERE post_id = $the_post_id  ";
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
                 $dispalay_all_posts_id = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($dispalay_all_posts_id)) {
                     $post_id = $row['post_id'];
@@ -121,7 +121,7 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_img; ?>" alt="">
+                <img class="img-responsive" src="admin/images/<?php echo $post_img ; ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
                 <hr>

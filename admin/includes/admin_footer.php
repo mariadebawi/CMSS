@@ -54,7 +54,6 @@ $(document).ready(function(){
       console.error( error );
   } );
 
-  //alert("stop555555") ;
 
 }) ;
 
