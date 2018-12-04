@@ -32,6 +32,7 @@ include "functions.php";
     <meta name="author" content="">
 
     <title>CMS</title>
+    <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -49,8 +50,6 @@ include "functions.php";
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-
 
 <style>
 
@@ -74,11 +73,6 @@ background-repeat: no-repeat;
 background-position: center;
 
 }
-
-
-
-
-
 
 </style>
 </head>

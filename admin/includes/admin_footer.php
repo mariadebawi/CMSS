@@ -1,5 +1,4 @@
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -19,6 +18,7 @@ $(document).ready(function(){
        $(this).remove();
     });
 
+ 
 
 
     $('#selectAllBox').click(function(){
@@ -55,8 +55,8 @@ $(document).ready(function(){
   } );
 
 
-}) ;
 
+}) ;
 
 
 

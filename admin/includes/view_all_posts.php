@@ -1,6 +1,9 @@
 
 
-<?php 
+
+
+<?php include("delete_modal.php") ;
+
   if(isset($_POST['submit']) ){
      foreach($_POST['checkBoxArray'] as $checkBoxValue){
           $bulk_options = $_POST['bulk_options'];
@@ -151,7 +154,11 @@
               echo "<td> <a href='posts.php?source=post_comment&id_pt={$post_id}'>{$count}</a></td>";
               echo "<td>{$poste_date}</td>";
               echo "<td><a href='../post.php?p_id={$post_id}'>View</a></td>";
-              echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
+              //echo "<td><a rel='$post_id' class='delete_link' href='posts.php?delete={$post_id}'>Delete</a></td>";
+
+              echo "<td><a rel='$post_id' class='delete_link' href='javascript:void(0)'>Delete</a></td>";
+
+
               echo "<td><a href='posts.php?source=edit_post&id_p={$post_id}'>Edit</a></td>";
               echo "<td><a href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
 
@@ -186,6 +193,31 @@
        ?>
 
        
+  <script>
+  $(document).ready(function(){
+    $(".delete_link").on('click' , function(){
+      var id = $(this).attr("rel") ;
+      var delete_url = "posts.php?delete=" + id + " " ;
+       $(".delete_link_button").attr("href" , delete_url) ;
+       $("#myModal").modal('show') ;
+
+    }) ;
+
+
+}) ;
+
+  </script>
+
+
+
+
+
+
+
+
+
+       
       </tbody>
   </table>
   </form>
+

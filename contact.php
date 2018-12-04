@@ -1,60 +1,32 @@
 <?php  include "includes/db.php"; ?>
  <?php  include "includes/header.php"; ?>
- 
-
-
-    <!-- Navigation -->
-    
-    <?php  include "includes/navigation.php"; ?>
+ <!-- Navigation -->
+<?php  include "includes/navigation.php"; ?>
     
 
     <!-- Page Content -->
-    <div class="container">
-    <?php 
-    $message = "" ; 
-
-      
-      if(isset($_POST['resgister'])){
-        $username = $_POST['username'] ;
+<div class="container">
+  <?php
+    if(isset($_POST['send'])){
+        $to ="debawimaria.fsm@hotmail.com" ;
         $email = $_POST['email'] ;
-        $password = $_POST['password'] ;
-          
-        /*****************  Protection  clean from the pile ********************/
-       $username = mysqli_real_escape_string($connection , $username) ;
-        $email = mysqli_real_escape_string($connection , $email) ;
-       $password = mysqli_real_escape_string($connection , $password) ;
-       
-        $password = password_hash($password , PASSWORD_BCRYPT,array('cost'=>12)) ;
-        
-        if ($username == "" || empty($username)  && $email == "" || empty($email) &&  $password == "" || empty($password)) {
-            $message ="this field shoud not be empty";
-        } 
-        else{
-        $query_add = "INSERT INTO users (username , user_password , user_firstname ,user_lastname ,user_email ,user_image ,user_role ) VALUES('{$username}','{$password}','','','{$email}','','subscriber')";
-        $add_user_query = mysqli_query($connection, $query_add);
-        if (!$add_user_query) {
-            die("QUERY FAILED" . mysqli_error($connection));
-        }
-        else {
-           $message = "ok";
-        }
+        $subject = $_POST['subject'] ;
+        $message = $_POST['message'] ;      
+        $header = "FROM :" . $email ;  
+        // use wordwrap() if lines are longer than 70 characters
+        $message = wordwrap($message,70);
+        // send email
+        mail($to,$subject,$message, $header );
     }
+  ?> 
 
-      }
-      
-       
-    ?>
-
-
-
-
-<section id="login">
+<section id="contact">
     <div class="container">
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
                 <h1>Contact</h1>
-                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                    <form role="form" action="contact.php" method="post" id="contact-form" autocomplete="off">
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com"  >              
