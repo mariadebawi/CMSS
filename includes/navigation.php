@@ -16,17 +16,19 @@
                 <ul class="nav navbar-nav">
              
             <?php 
-              $query = "SELECT * FROM categories" ;
+              $query = "SELECT * FROM categories Limit 3" ;
               $dispalay_all = mysqli_query($connection , $query);
                while($row = mysqli_fetch_assoc($dispalay_all)){
                    $cat_title = $row['cat_title'] ;
-                   echo "<li><a href='#'>{$cat_title}</a></li>" ;
+                   $cat_id = $row['cat_id'] ;
+
+                   echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>" ;
                }
                ?>
                <?php  
                      if(!isset($_SESSION['username'])){
-
                        echo "<li> <a href='registration.php'>Registration</a> </li>" ;
+                       echo" <li><a href='contact.php'>Contact</a></li>" ;
                     }
                     ?>
       
@@ -37,9 +39,7 @@
                     }
                     ?>
                  
-                    <li>
-                        <a href="contact.php">Contact</a>
-                    </li>
+                   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

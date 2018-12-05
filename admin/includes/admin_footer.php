@@ -18,9 +18,6 @@ $(document).ready(function(){
        $(this).remove();
     });
 
- 
-
-
     $('#selectAllBox').click(function(){
      if(this.checked){
          $('.checkBoxes').each(function(){
@@ -34,16 +31,10 @@ $(document).ready(function(){
      }
     }) ;
 
-
-    /*********************** Loading *******************************/
-
  }) ;
- 
 
-
- 
-
-/****************** ckeditor ******************** */
+  
+    /****************** ckeditor ******************** */
 
 $(document).ready(function(){
     //https://ckeditor.com/docs/ckeditor5/latest/builds/guides/quick-start.html
@@ -55,18 +46,7 @@ $(document).ready(function(){
   } );
 
 
-
 }) ;
-
-
-
-
-
-
-
-
-
-
 
     </script>
 </body>

@@ -92,21 +92,64 @@
 
               <div class="col-md-8">
             <?php 
-            if (isset($_GET['p_id'])) {
+            if (isset($_GET['p_id']) ) {
                 $the_post_id = $_GET['p_id'];
+                
+               
+               if(isset($_GET['user'])){
+                $the_user = $_GET['user'];
+                if(!empty($the_user)){
+                    $query_user = "SELECT * FROM posts WHERE post_user ='{$the_user}'";
+                    $dispalay_all_posts_user = mysqli_query($connection, $query_user);
+                    while ($row = mysqli_fetch_assoc($dispalay_all_posts_user)) {
+                        $post_id = $row['post_id'];
+                        $post_title = $row['post_title'];
+                        $post_user = $row['post_user'];
+                        $post_date = $row['poste_date'];
+                        $post_content = $row['post_content'];
+                        $post_img = $row['post_image'];
+                    
+                        ?>
+                 
+              
+           <h1 class="page-header">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
+                <!-- First Blog Post -->
+                <h2>
+                    <a href="post.php?p_id=<?php echo $the_post_id ; ?>"><?php echo $post_title ?></a>
+                </h2>
+                <p class="lead">
+                   All Post  by  <?php echo $post_user ?>
+                </p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
+                <hr>
+                <img class="img-responsive" src="admin/images/<?php echo $post_img; ?>" alt="">
+                <hr>
+                <p><?php echo $post_content ?></p>
+                <hr>
+               <?php 
+            }
+                }
+            }
+   
+            if(isset($_GET['author'])){
                 $the_author = $_GET['author'];
-
-                $query_author = "SELECT * FROM posts WHERE post_author =  '{$the_author}' ";
-                $dispalay_all_posts_author = mysqli_query($connection, $query_author);
-                while ($row = mysqli_fetch_assoc($dispalay_all_posts_author)) {
-                    $post_id = $row['post_id'];
-                    $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
-                    $post_date = $row['poste_date'];
-                    $post_content = $row['post_content'];
-                    $post_img = $row['post_image'];
-
-                    ?>
+                if(!empty($the_author)){
+                    $query_author = "SELECT * FROM posts WHERE post_author ='{$the_author}'";
+                    $dispalay_all_posts_author = mysqli_query($connection, $query_author);
+                    while ($row = mysqli_fetch_assoc($dispalay_all_posts_author)) {
+                        $post_id = $row['post_id'];
+                        $post_title = $row['post_title'];
+                        $post_author = $row['post_author'];
+                        $post_date = $row['poste_date'];
+                        $post_content = $row['post_content'];
+                        $post_img = $row['post_image'];
+                    
+                        ?>
+                 
+              
            <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
@@ -126,10 +169,11 @@
                 <hr>
                <?php 
             }
-
-
-
-           
+               
+                }
+            }
+         
+                               
         }
         ?>
                 

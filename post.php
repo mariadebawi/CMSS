@@ -97,27 +97,40 @@
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}" ;
             $count_view = mysqli_query($connection, $view_query);
 
-                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
                 $dispalay_all_posts_id = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($dispalay_all_posts_id)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
                     $post_author = $row['post_author'];
+                    $post_user = $row['post_user'] ;
                     $post_date = $row['poste_date'];
                     $post_content = $row['post_content'];
                     $post_img = $row['post_image'];
 
                     ?>
            <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                   Posts
                 </h1>
                 <!-- First Blog Post -->
                 <h2>
                     <a href="#"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                by <a href="author_post.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id;?>"> <?php echo $post_author ?></a>
+                by 
+                <?php 
+
+
+                    if(!empty($post_user)) {
+                       echo "<a href='author_post.php?user=$post_user&p_id=$post_id ?'> $post_user </a>";
+                    }
+                    elseif(!empty($post_author)){
+                        echo "<a href='author_post.php?author=$post_author&p_id=$post_id ?'> $post_author </a>";
+                    } 
+
+
+                    ?>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
@@ -154,7 +167,9 @@
                     echo "<script> alert('Filed cannot be empty')</script>";
                 }
             }
-        }
+        }else {
+            echo "<h1 class ='text-center'> You should login </h1>" ;
+        }}
         ?>
                 
             </div>

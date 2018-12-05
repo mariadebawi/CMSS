@@ -174,8 +174,6 @@
             $delete_post_query = mysqli_query($connection, $query);
             header("Location:posts.php");
         }
-       
-       
        ?>
 
 
@@ -188,11 +186,8 @@
             $reset_post_query = mysqli_query($connection, $reset_query);
             header("Location:posts.php");
         }
-       
-       
        ?>
 
-       
   <script>
   $(document).ready(function(){
     $(".delete_link").on('click' , function(){
@@ -202,8 +197,6 @@
        $("#myModal").modal('show') ;
 
     }) ;
-
-
 }) ;
 
   </script>

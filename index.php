@@ -32,13 +32,14 @@ include "includes/navigation.php";
             }
 
 
-                $query_count = "SELECT * FROM posts" ;
-                $find_count = mysqli_query($connection , $query_count);
-                $post_count = mysqli_num_rows($find_count) ;
-                $post_count = ceil ($post_count / 5 );
+            
 
-              $query = "SELECT * FROM posts LIMIT {$page_1} , {$page_limit}" ;
+              $query = "SELECT * FROM posts   WHERE post_status = 'published' LIMIT {$page_1} , {$page_limit}" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
+              $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
+              $post_count_pub = ceil ($post_count / 5 );
+                 if($post_count_pub > 0){
+
                while($row = mysqli_fetch_assoc($dispalay_all_posts)){
                    $post_id = $row['post_id'] ;
                    $post_title = $row['post_title'] ;
@@ -49,7 +50,6 @@ include "includes/navigation.php";
                    $post_content = substr($row['post_content'],0,30);
                    $post_img = $row['post_image'] ;
                    $post_status = $row['post_status'] ;
-                   if($post_status === 'published')
                    ?>
            <h1 class="page-header">
                     Page Heading
@@ -65,7 +65,7 @@ include "includes/navigation.php";
 
 
                     if(!empty($post_user)) {
-                       echo "<a href='author_post.php?author=$post_user&p_id=$post_id ?'> $post_user </a>";
+                       echo "<a href='author_post.php?user=$post_user&p_id=$post_id ?'> $post_user </a>";
                     }
                     elseif(!empty($post_author)){
                         echo "<a href='author_post.php?author=$post_author&p_id=$post_id ?'> $post_author </a>";
@@ -85,8 +85,13 @@ include "includes/navigation.php";
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
+    
                <?php 
+
+               }} else {
+                   echo "<h1 class='text-center'> No Posts</h1>" ;
                }
+                 
              ?>
                 
             </div>
@@ -96,11 +101,11 @@ include "includes/navigation.php";
             ?>
         </div>
         <!-- /.row -->
-        <hr>
-       <!--  Pagination -->
+        <!--  Pagination -->
+      <hr>
         <ul class="pager">
         <?php
-           for($i = 1 ; $i <= $post_count ; $i++){
+           for($i = 1 ; $i <= $post_count_pub ; $i++){
                if($i == $page){
                 echo "<li ><a class='active' href='index.php?page={$i}'>$i</a></li>" ;
                }
@@ -110,7 +115,7 @@ include "includes/navigation.php";
         }
         ?>
         </ul>
-
+    
 
 
 
