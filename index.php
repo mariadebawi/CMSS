@@ -5,11 +5,6 @@ include "includes/header.php";
 include "includes/db.php";
 include "includes/navigation.php";
 ?>
-
-
-
-
-
   <!-- Page Content -->
     <div class="container">
         <div class="row">
@@ -30,10 +25,6 @@ include "includes/navigation.php";
              else {
                  $page_1 = ($page * 5) - 5 ; 
             }
-
-
-            
-
               $query = "SELECT * FROM posts   WHERE post_status = 'published' LIMIT {$page_1} , {$page_limit}" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
               $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
@@ -61,18 +52,14 @@ include "includes/navigation.php";
                 </h2>
                 <p class="lead">
                     by
-                    <?php 
-
-
+                <?php 
                     if(!empty($post_user)) {
                        echo "<a href='author_post.php?user=$post_user&p_id=$post_id ?'> $post_user </a>";
                     }
                     elseif(!empty($post_author)){
-                        echo "<a href='author_post.php?author=$post_author&p_id=$post_id ?'> $post_author </a>";
+                      echo "<a href='author_post.php?author=$post_author&p_id=$post_id ?'> $post_author </a>";
                     } 
-
-
-                    ?>
+                ?>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
@@ -83,17 +70,13 @@ include "includes/navigation.php";
                 <p><?php echo $post_content ?></p>
                 <br><br>
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
                 <hr>
-    
                <?php 
-
-               }} else {
+               }
+            } else {
                    echo "<h1 class='text-center'> No Posts</h1>" ;
                }
-                 
              ?>
-                
             </div>
             <!-- Blog Sidebar Widgets Column -->
             <?php 
@@ -115,10 +98,6 @@ include "includes/navigation.php";
         }
         ?>
         </ul>
-    
-
-
-
 
         <!-- Footer -->
         <?php 

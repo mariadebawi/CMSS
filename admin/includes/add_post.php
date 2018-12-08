@@ -18,7 +18,7 @@
             $post_content = $_POST['post_content'];
             $post_comment_count = 0;
 
-            move_uploaded_file($post_image_temp, "./images/$post_image");
+            move_uploaded_file($post_image_temp, "../admin/images/$post_image");
        
             $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status,post_user) VALUES('{$post_category_id}','{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}' ,'{$post_username}')";
             $add_post_query = mysqli_query($connection, $query);
@@ -57,13 +57,13 @@
      <div class="form-group ">
      <label for="cat">users</label>
      <select class="form-control " name="user" id="">
+      <option value=''>  </option>
           <?php 
             $query = "SELECT * FROM users";
             $dispalay_all = mysqli_query($connection, $query);
             while ($row = mysqli_fetch_assoc($dispalay_all)) {
                 $user_id = $row['user_id'];
                 $username = $row['username'];
-                echo "<option value=''>  </option>" ;
                 echo "<option value='{$username}'> {$username} </option>" ;
             }
             ?>

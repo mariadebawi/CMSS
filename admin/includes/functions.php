@@ -1,10 +1,9 @@
-<?php 
-include "../includes/db.php";
+<?php include "../includes/db.php";?>
+<?php session_start() ; ?>
 
-?>
+
 
 <?php
-
 function users_online(){
     global $connection;
 
@@ -75,6 +74,23 @@ function delete_cat()
         $delete_query = mysqli_query($connection, $query);
         header("Location:categories.php");
     }
+}
+
+function count_table($table){
+    global $connection;
+    $query1 = "SELECT * FROM " . $table;
+    $select_all = mysqli_query($connection, $query1);
+    return mysqli_num_rows($select_all);
+}
+
+
+
+function count_cond($table , $prt , $condi){
+    global $connection;
+    $query_draft = "SELECT * FROM $table WHERE $prt = '$condi'";
+    $select_draft_posts = mysqli_query($connection, $query_draft);
+      return mysqli_num_rows($select_draft_posts);
+
 }
 
 

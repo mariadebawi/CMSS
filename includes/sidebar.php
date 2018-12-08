@@ -19,7 +19,15 @@
 
 <!-- login -->
 <div class="well">
-    <h4>Login</h4>
+
+<?php if(isset($_SESSION['username'])):  ?>
+<h4> username :  <?php echo $_SESSION['username'] ; ?> </h4>
+<span class="input-group-btn">
+         <a href="includes/logout.php" class="btn btn-primary"> Logout</a>
+            
+        </span>
+<?php else: ?>
+<h4>Login</h4>
     <form action="includes/login.php" method="post">
     <div class="form-group">
         <input type="text" name="username" placeholder="enter Username" class="form-control">
@@ -32,6 +40,13 @@
         </span>
     </div>
 </form>
+<?php  endif; ?>
+
+
+
+
+
+    
     <!-- /.input-group -->
 </div>
 

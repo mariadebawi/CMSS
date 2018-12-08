@@ -9,7 +9,7 @@
           <h4 class="modal-title">Delete</h4>
         </div>
         <div class="modal-body">
-          <h3>Delete ??????????????????????????</h3>
+          <h3>Sure to Delete ??</h3>
         </div>
         <div class="modal-footer">
           <a href="" class=" btn btn-danger  delete_link_button">Delete</a>

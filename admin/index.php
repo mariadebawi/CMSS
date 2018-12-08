@@ -30,28 +30,6 @@ include "includes/admin_header.php";
 
 <?php 
 
-/******** number of posts */
-$query1 = "SELECT * FROM posts";
-$select_all_posts = mysqli_query($connection, $query1);
-$post_count = mysqli_num_rows($select_all_posts);
-
-
-/******** number of comments */
-$query2 = "SELECT * FROM comments";
-$select_all_comments = mysqli_query($connection, $query2);
-$comment_count = mysqli_num_rows($select_all_comments);
-
-
-
-/******** number of users */
-$query2 = "SELECT * FROM users";
-$select_all_users = mysqli_query($connection, $query2);
-$user_count = mysqli_num_rows($select_all_users);
-
-/******** number of categories */
-$query3 = "SELECT * FROM categories";
-$select_all_categories = mysqli_query($connection, $query3);
-$category_count = mysqli_num_rows($select_all_categories);
 
 
 
@@ -69,7 +47,7 @@ $category_count = mysqli_num_rows($select_all_categories);
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                     <?php echo "<div class='huge'>{$post_count}</div>" ?>
+                    <div class='huge'><?php echo $post_count = count_table('posts') ; ?></div>
                         <div>Posts</div>
                     </div>
                 </div>
@@ -91,7 +69,7 @@ $category_count = mysqli_num_rows($select_all_categories);
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <?php echo "<div class='huge'>{$comment_count}</div>" ?>
+                    <div class='huge'><?php echo $comment_count = count_table('comments') ; ?></div>
                       <div>Comments</div>
                     </div>
                 </div>
@@ -113,7 +91,7 @@ $category_count = mysqli_num_rows($select_all_categories);
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <?php echo "<div class='huge'>{$user_count}</div>" ?>
+                    <div class='huge'><?php echo $user_count= count_table('users') ;?></div>
                         <div> Users</div>
                     </div>
                 </div>
@@ -135,7 +113,7 @@ $category_count = mysqli_num_rows($select_all_categories);
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <?php echo "<div class='huge'>{$category_count}</div>" ?>
+                    <div class='huge'><?php echo $category_count = count_table('categories') ; ?></div>
                          <div>Categories</div>
                     </div>
                 </div>
@@ -165,36 +143,19 @@ $category_count = mysqli_num_rows($select_all_categories);
 
             
     <?php 
-    /******** number of Dreft posts */
-    $query_draft = "SELECT * FROM posts WHERE post_status = 'draft'";
-    $select_draft_posts = mysqli_query($connection, $query_draft);
-    $post_draft_count = mysqli_num_rows($select_draft_posts);
 
-    /******** number of publish posts */
-    $query_publish = "SELECT * FROM posts WHERE post_status = 'published'";
-    $select_publish_posts = mysqli_query($connection, $query_publish);
-    $post_publish_count = mysqli_num_rows($select_publish_posts);
+    $post_draft_count = count_cond('posts' , 'post_status' , 'draft') ;
+    $post_publish_count = count_cond('posts' , 'post_status' , 'published') ;
+    $comment_Unapprove_count  = count_cond('comments' , 'comment_status' , 'unapprove') ;
+    $user_subscriber_count  = count_cond('users' , 'user_role' , 'subscriber') ;
 
-    /******** number of unapprove comments */
-    $query_unapprove = "SELECT * FROM comments WHERE comment_status = 'unapprove'";
-    $select_Unapprove_comments = mysqli_query($connection, $query_unapprove);
-    $comment_Unapprove_count = mysqli_num_rows($select_Unapprove_comments);
-
-
-
-    /******** number of users */
-    $query_subscriber = "SELECT * FROM users WHERE user_role = 'subscriber'";
-    $select_subscriber_users = mysqli_query($connection, $query_subscriber);
-    $user_subscriber_count = mysqli_num_rows($select_subscriber_users);
 
     $element_text = ['Active Posts', 'Publish Post', 'Draft Posts', 'Comments', 'pend_Comments', 'Users', 'Subscribers', 'Categories'];
     $element_count = [$post_count, $post_publish_count, $post_draft_count, $comment_count, $comment_Unapprove_count, $user_count, $user_subscriber_count, $category_count];
-
     for ($i = 0; $i < 8; $i++) {
         echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}] ,";
     }
         ?> 
-
          ]);
         var options = {
           chart: {
@@ -202,17 +163,12 @@ $category_count = mysqli_num_rows($select_all_categories);
             subtitle: '',
           }
         };
-
         var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
     </script>
-
     <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
-
                 </div>
-                
                     </div>
                 </div>
                 <!-- /.row -->

@@ -27,14 +27,10 @@
             if (isset($_POST['edit_post'])) {
                 //$post_id = $row['post_id'];
                 $post_title = $_POST['title'];
-              
-                
                 $post_author = $_POST['author'];
                 $poste_date = date('y-m-d');
-    
                 $post_image = $_FILES['image']['name'];
                 $post_image_temp = $_FILES['image']['tmp_name'];
-    
                 $post_tags = $_POST['post_tags'];
                 $post_status = $_POST['post_status'];
                 $post_category_id = $_POST['post_category'];
@@ -48,7 +44,7 @@
                 if (!$edit_post_query) {
                     die("QUERY FAILED" . mysqli_error($connection));
                 } else {
-                    echo "work";
+                    echo "<p class='bg-success'>Post edited .<a href='./posts.php'>View all ? </a></p>" ;
                 }
             
         }
@@ -59,6 +55,9 @@
         <label for="title">Post Title</label>
          <input type="text"  value="<?php  {echo $post_title;} ?>" class="form-control" name="title">
      </div>
+
+
+
      <div class="form-group ">
      <label for="categorie">Categorie</label>
         <select class="form-control " name="post_category" id="">
@@ -68,11 +67,21 @@
             while ($row = mysqli_fetch_assoc($dispalay_all)) {
                 $cat_title = $row['cat_title'];
                 $cat_id = $row['cat_id'];
+
+                  if($cat_id == $post_category_id){
+                      /*********** selected **************/
+                echo "<option selected  value='$cat_id'> {$cat_title} </option>" ;
+            }else {
                 echo "<option value='$cat_id'> {$cat_title} </option>" ;
+
             }
+        }
             ?>
         </select>
      </div>  
+
+
+
       
      <div class="form-group ">
      <label for="cat">users</label>
@@ -102,10 +111,10 @@
 
           <?php 
                if($post_status === 'published'){
-                echo "<option value='draft'> Draft </option>" ;
+                echo "<option selected value='draft'> Draft </option>" ;
                }
                else {
-                echo "<option value='published'> Published </option>" ;
+                echo "<option selected value='published'> Published </option>" ;
                }
             ?>
         </select>
@@ -113,9 +122,10 @@
      
    <div class="form-group">
         <label for="post_image">Post Image</label>
-        <img width='100' class='img-responsive' src='./images/<?php echo $post_image ; ?>' alt='image'>
+        <img width='100' class='img-responsive' src='../admin/images/<?php echo $post_image ; ?>' alt='image'>
         <br>
         <input type="file"  name="image"> 
+           
      </div>
 
      <div class="form-group">
@@ -124,7 +134,7 @@
      </div>
      <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control "   name="post_content" id="body" cols="30" rows="10"><?php echo  $post_content ; ?></textarea>
+        <textarea class="form-control "   name="post_content" id="body" cols="30" rows="10"><?php  $post_content ; ?></textarea>
      </div>
       <div class="form-group">
          <input class="btn btn-success" type="submit" name="edit_post" value="Edit_Post">

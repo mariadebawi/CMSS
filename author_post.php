@@ -1,14 +1,8 @@
 <?php session_start(); ?>
 <?php include "includes/db.php"; ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,9 +25,7 @@
     <![endif]-->
 
 </head>
-
 <body>
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -57,8 +49,6 @@
                         $cat_title = $row['cat_title'];
                         echo "<li><a href='#'>{$cat_title}</a></li>";
                     }
-
-            //p_id
                     if (isset($_SESSION['username'])) {
                         if (isset($_GET['p_id'])) {
                             $the_pst_id = $_GET['p_id'];
@@ -72,12 +62,6 @@
                         echo "<li> <a href='admin'>Admin</a> </li>";
                     }
                     ?>
-
-                      <!--
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                    !-->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -87,15 +71,11 @@
 
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
-
               <div class="col-md-8">
             <?php 
             if (isset($_GET['p_id']) ) {
                 $the_post_id = $_GET['p_id'];
-                
-               
                if(isset($_GET['user'])){
                 $the_user = $_GET['user'];
                 if(!empty($the_user)){
@@ -108,15 +88,7 @@
                         $post_date = $row['poste_date'];
                         $post_content = $row['post_content'];
                         $post_img = $row['post_image'];
-                    
                         ?>
-                 
-              
-           <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
-                <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?php echo $the_post_id ; ?>"><?php echo $post_title ?></a>
                 </h2>
@@ -133,7 +105,6 @@
             }
                 }
             }
-   
             if(isset($_GET['author'])){
                 $the_author = $_GET['author'];
                 if(!empty($the_author)){
@@ -146,15 +117,7 @@
                         $post_date = $row['poste_date'];
                         $post_content = $row['post_content'];
                         $post_img = $row['post_image'];
-                    
                         ?>
-                 
-              
-           <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
-                <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?php echo $the_post_id ; ?>"><?php echo $post_title ?></a>
                 </h2>
@@ -170,19 +133,12 @@
                <?php 
             }
                
-                }
-            }
-         
-                               
+         }
+            }   
         }
-        ?>
-                
+        ?>  
             </div>
-
-            <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
-
-                <!-- Blog Search Well -->
                 <div class="well">
                     <h4>Blog Search</h4>
                     <div class="input-group">
@@ -193,10 +149,7 @@
                         </button>
                         </span>
                     </div>
-                    <!-- /.input-group -->
                 </div>
-
-                <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>Blog Categories</h4>
                     <div class="row">
@@ -227,7 +180,6 @@
                     </div>
                     <!-- /.row -->
                 </div>
-
                 <!-- Side Widget Well -->
                 <div class="well">
                     <h4>Side Widget Well</h4>

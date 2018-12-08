@@ -1,7 +1,4 @@
 
-
-
-
 <?php include("delete_modal.php") ;
 
   if(isset($_POST['submit']) ){
@@ -29,12 +26,13 @@
 
                break ;
                case 'clone' :
-               $query = "SELECT * FROM posts WHERE  post_id = {$checkBoxValue} ";
+              $query = "SELECT * FROM posts WHERE  post_id = {$checkBoxValue} ";
               $dispalay_all_post = mysqli_query($connection, $query);
               while ($row = mysqli_fetch_assoc($dispalay_all_post)) {
               $p_id = $row['post_id'];
               $p_title = $row['post_title']; 
               $p_author = $row['post_author']; 
+              $p_user = $row['post_user']; 
               $p_date = $row['poste_date']; 
               $p_image = $row['post_image']; 
               $p_tags = $row['post_tags']; 
@@ -42,7 +40,7 @@
               $p_category_id = $row['post_category_id']; 
               $p_comment_count = $row['post_comment_count']; 
               }
-               $query_clone = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status) VALUES('{$p_category_id}','{$p_title}','{$p_author}',now(),'{$p_image}','{$p_content}','{$p_tags}','{$p_comment_count}','{$p_status}')";
+               $query_clone = "INSERT INTO posts(post_category_id ,post_title ,post_author,poste_date ,post_image,post_content ,post_tags ,post_comment_count,post_status,post_user) VALUES('{$p_category_id}','{$p_title}','{$p_author}',now(),'{$p_image}','{$p_content}','{$p_tags}','{$p_comment_count}','{$p_status}','{$p_user}')";
                $clone_post_query = mysqli_query($connection, $query_clone);
                header("Location:posts.php");
                if (!$clone_post_query) {
@@ -100,9 +98,16 @@
       </thead>
       <tbody>
       <?php
-          $query = "SELECT * FROM posts ORDER BY post_id DESC";
-          $dispalay_all_post = mysqli_query($connection, $query);
+
+
+         // $query = "SELECT * FROM posts ORDER BY post_id DESC";
+
+      /********************* Jointure entre posts and category  *******/
+
+           $query = "SELECT * FROM posts LEFT JOIN categories ON post_category_id=cat_id  ORDER BY posts.post_id DESC";
+           $dispalay_all_post = mysqli_query($connection, $query);           
           while ($row = mysqli_fetch_assoc($dispalay_all_post)) {
+
               $post_id = $row['post_id'];
               $post_title = $row['post_title']; 
               $post_author = $row['post_author']; 
@@ -112,7 +117,12 @@
               $post_image = $row['post_image']; 
               $post_tags = $row['post_tags']; 
               $post_status= $row['post_status'];
-              $post_category_id = $row['post_category_id']; 
+             // $post_category_id = $row['post_category_id']; 
+              $cat_title = $row['cat_title'];
+            if(empty($post_tags)){
+                $post_tags = "no tags"; 
+               }
+  
 
 
             $query_count = "SELECT * from comments WHERE comment_post_id = {$post_id} ";
@@ -139,27 +149,33 @@
 
               echo "<td>$post_title</td>";
 
-            /********************* Jointure entre posts and category  *******/
+            /*
               $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
               $edit_cat = mysqli_query($connection, $query);
               while ($row = mysqli_fetch_assoc($edit_cat)) {
                 $cat_title = $row['cat_title'];
+                */
                 echo "<td>$cat_title</td>";
-              }
+              
 
 
-              echo "<td>{$post_status}</td>";
+              echo "<td>$post_status</td>";
               echo "<td> <img width='100' class='img-responsive' src='./images/$post_image' alt='image'></td>";
               echo "<td>{$post_tags}</td>";
               echo "<td> <a href='posts.php?source=post_comment&id_pt={$post_id}'>{$count}</a></td>";
               echo "<td>{$poste_date}</td>";
-              echo "<td><a href='../post.php?p_id={$post_id}'>View</a></td>";
-              //echo "<td><a rel='$post_id' class='delete_link' href='posts.php?delete={$post_id}'>Delete</a></td>";
+              echo "<td><a class='btn btn-primary' href='../post.php?p_id={$post_id}'>View</a></td>";
+  ?>
 
-              echo "<td><a rel='$post_id' class='delete_link' href='javascript:void(0)'>Delete</a></td>";
-
-
-              echo "<td><a href='posts.php?source=edit_post&id_p={$post_id}'>Edit</a></td>";
+            <form action="">
+             <input type="hidden" name ="post_id" value="<?php echo $post_id ; ?>">
+             <?php
+             echo "<td><input class='btn btn-danger' value='Delete' name='delete' type='submit'></td>"
+                //echo "<td><a rel='$post_id' class='delete_link' href='javascript:void(0)'>Delete</a></td>";
+             ?>
+            </form>
+<?php
+              echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&id_p={$post_id}'>Edit</a></td>";
               echo "<td><a href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
 
               echo "</tr>";
@@ -168,8 +184,8 @@
 
        <?php   
 
-        if (isset($_GET['delete'])) {
-            $the_post_id = $_GET['delete'];
+        if (isset($_POST['delete'])) {
+            $the_post_id = $_POST['post_id'];
             $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
             $delete_post_query = mysqli_query($connection, $query);
             header("Location:posts.php");
@@ -189,6 +205,7 @@
        ?>
 
   <script>
+  /****** Modal  ********/
   $(document).ready(function(){
     $(".delete_link").on('click' , function(){
       var id = $(this).attr("rel") ;

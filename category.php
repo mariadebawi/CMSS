@@ -15,8 +15,6 @@ include "includes/navigation.php";
             <?php 
             if(isset($_GET['category'])){
                $id_cat = $_GET['category'] ;
-
-              
               $query = "SELECT * FROM posts WHERE post_category_id = $id_cat and post_status = 'published'" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
               $post_count_pub = mysqli_num_rows( $dispalay_all_posts ) ;
@@ -40,18 +38,13 @@ include "includes/navigation.php";
                 </h2>
                 <p class="lead">
                     by 
-                    
                     <?php 
-
-
                     if(!empty($post_user)) {
                        echo "<a href='author_post.php?user=$post_user&p_id=$post_id ?'> $post_user </a>";
                     }
                     elseif(!empty($post_author)){
                         echo "<a href='author_post.php?author=$post_author&p_id=$post_id ?'> $post_author </a>";
                     } 
-
-
                     ?>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
@@ -66,10 +59,7 @@ include "includes/navigation.php";
                 echo "<h1 class='text-centet'> No categories</h1>" ;
                }
             } 
-              
-              
              ?>
-                
             </div>
             <!-- Blog Sidebar Widgets Column -->
             <?php 
