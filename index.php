@@ -25,7 +25,8 @@ include "includes/navigation.php";
              else {
                  $page_1 = ($page * 5) - 5 ; 
             }
-              $query = "SELECT * FROM posts   WHERE post_status = 'published' LIMIT {$page_1} , {$page_limit}" ;
+            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] =='admin' ){
+              $query = "SELECT * FROM posts  LIMIT {$page_1} , {$page_limit}" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
               $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
               $post_count_pub = ceil ($post_count / 5 );
@@ -72,8 +73,61 @@ include "includes/navigation.php";
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
                <?php 
-               }
-            } else {
+               }}
+            }
+
+            elseif(!$_SESSION['user_role'] =='admin' ){
+             
+                $query = "SELECT * FROM posts   WHERE post_status = 'published' LIMIT {$page_1} , {$page_limit}" ;
+                $dispalay_all_posts = mysqli_query($connection , $query);
+                $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
+                $post_count_pub = ceil ($post_count / 5 );
+                   if($post_count_pub > 0){
+  
+                 while($row = mysqli_fetch_assoc($dispalay_all_posts)){
+                     $post_id = $row['post_id'] ;
+                     $post_title = $row['post_title'] ;
+                     $post_author = $row['post_author'] ;
+                     $post_user = $row['post_user'] ;
+  
+                     $post_date = $row['poste_date'] ;
+                     $post_content = substr($row['post_content'],0,30);
+                     $post_img = $row['post_image'] ;
+                     $post_status = $row['post_status'] ;
+                     ?>
+             <h1 class="page-header">
+                      Page Heading
+                      <small>Secondary Text</small>
+                  </h1>
+                  <!-- First Blog Post -->
+                  <h2>
+                      <a href="post.php?p_id=<?php echo $post_id ; ?>"><?php echo $post_title ?></a>
+                  </h2>
+                  <p class="lead">
+                      by
+                  <?php 
+                      if(!empty($post_user)) {
+                         echo "<a href='author_post.php?user=$post_user&p_id=$post_id ?'> $post_user </a>";
+                      }
+                      elseif(!empty($post_author)){
+                        echo "<a href='author_post.php?author=$post_author&p_id=$post_id ?'> $post_author </a>";
+                      } 
+                  ?>
+                  </p>
+                  <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
+                  <hr>
+                  <a href="post.php?p_id=<?php echo $post_id ; ?>">
+                  <img class="img-responsive" src="admin/images/<?php echo $post_img ;?>" alt="">
+                  </a>
+                  <hr>
+                  <p><?php echo $post_content ?></p>
+                  <br><br>
+                  <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                  <hr>
+                 <?php 
+                 }}
+              }
+            else {
                    echo "<h1 class='text-center'> No Posts</h1>" ;
                }
              ?>

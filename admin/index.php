@@ -139,9 +139,7 @@ include "includes/admin_header.php";
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['Data', 'Count'] ,
-
-            
+            ['Data', 'Count'] ,     
     <?php 
 
     $post_draft_count = count_cond('posts' , 'post_status' , 'draft') ;

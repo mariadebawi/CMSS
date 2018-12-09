@@ -41,15 +41,17 @@
               }
                    echo "<li class='$category_class'><a href='category.php?category=$cat_id'>{$cat_title}</a></li>" ;
                }
-               if(!isset($_SESSION['username'])){
+               if(!isset($_SESSION['user_role'])=='admin' ){
                        echo "<li class='$registration_class'> <a href='registration.php'>Registration</a> </li>" ;
                       echo" <li  class='$contact_class'><a href='contact.php'>Contact</a></li>" ;
+
+
                }
 
       ?>
                     <?php  
-                     if(isset($_SESSION['username'])){
-
+                    
+                     if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ){
                        echo "<li> <a href='admin'>Admin</a> </li>" ;
                     }
                     ?>

@@ -1,3 +1,5 @@
+
+
 <div class="col-md-4">
 
 <!-- Blog Search Well -->
@@ -20,7 +22,8 @@
 <!-- login -->
 <div class="well">
 
-<?php if(isset($_SESSION['username'])):  ?>
+<?php 
+if(isset($_SESSION['username'])):  ?>
 <h4> username :  <?php echo $_SESSION['username'] ; ?> </h4>
 <span class="input-group-btn">
          <a href="includes/logout.php" class="btn btn-primary"> Logout</a>
@@ -59,6 +62,7 @@
         <div class="col-lg-12">
             <ul class="list-unstyled">
             <?php 
+            
             $query = "SELECT * FROM categories";
             $dispalay_all = mysqli_query($connection, $query);
             while ($row = mysqli_fetch_assoc($dispalay_all)) {
