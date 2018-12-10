@@ -1,0 +1,7 @@
+{
+    "name": "maria/cms",
+    "require": {
+        "phpmailer/phpmailer": "^6.0",
+        "snowfire/mail": "^2.1"
+    }
+}

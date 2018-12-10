@@ -2,6 +2,10 @@
 
 <?php
 
+function redirect($location){
+    header("Location:" . $location);
+    exit ;
+}
 
     function user_exist($user){
         global $connection;
@@ -48,7 +52,7 @@
       }
      }
 
-function login_user(){
+function login_user($username,$password){
     global $connection;
     $username = $_POST['username'] ;
     $password = $_POST['password'] ;
@@ -74,7 +78,6 @@ function login_user(){
     }
 
    if(password_verify($password , $db_user_password)){
-       header("Location:../admin") ;
        $_SESSION['id_user'] = $db_user_id ;
        $_SESSION['username'] = $db_username ;
        $_SESSION['lastname'] = $db_user_lastname ;
@@ -82,19 +85,15 @@ function login_user(){
        $_SESSION['user_role'] = $db_user_role  ;
        $_SESSION['password']  = $db_user_password ;
        $_SESSION['email']  = $db_user_email ;
-     
+       redirect('../admin');
+
    }
    else {
-       header("Location:../index.php") ;
+     return false ;
    }
-
-   
 }
 
-function redirect($location){
-    header("Location:" . $location);
-    exit ;
-}
+
 
 function ifItIsMethod($method = null){
   if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
@@ -131,9 +130,4 @@ function checkIfLoginAndRedirct($location = null){
     }
 }
 
-
-
-
-
-
-    ?>
+?>

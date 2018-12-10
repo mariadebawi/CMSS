@@ -46,20 +46,23 @@
                 $login_class = 'active' ;
              }
                    echo "<li class='$category_class'><a href='/category/$cat_id'>{$cat_title}</a></li>" ;
-               }
+             }
                if(!IsAdmin()){
                       // en peut mettre contect sans .php apres .htaccess
                        echo "<li class='$registration_class'> <a href='registration'>Registration</a> </li>" ;
                        echo" <li  class='$login_class'><a href='./login.php'>Login</a></li>" ;
                        echo" <li  class='$contact_class'><a href='contact'>Contact</a></li>" ;
                }
-                ?>
-                    <?php  
-                    if(IsAdmin()){
+               else{
                        echo "<li> <a href='/admin'>Admin</a> </li>" ;
+                       echo "<li> <a href='includes/logout.php'>Logout</a> </li>" ;
+
                     }
                     ?>
+               
                 </ul>
+             
+               
             </div>
             <!-- /.navbar-collapse -->
         </div>
