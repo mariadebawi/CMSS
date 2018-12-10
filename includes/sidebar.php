@@ -63,12 +63,12 @@ if(isset($_SESSION['username'])):  ?>
             <ul class="list-unstyled">
             <?php 
             
-            $query = "SELECT * FROM categories";
+             $query = "SELECT * FROM categories";
             $dispalay_all = mysqli_query($connection, $query);
             while ($row = mysqli_fetch_assoc($dispalay_all)) {
                 $cat_title = $row['cat_title'];
                 $c_id = $row['cat_id'];
-                echo "<li><a href='category.php?category=$c_id'>{$cat_title}</a></li>";
+                echo "<li><a href='/category/$c_id'>{$cat_title}</a></li>";
             }
             ?>
             </ul>

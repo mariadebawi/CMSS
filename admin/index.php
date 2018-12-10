@@ -18,26 +18,6 @@ include "includes/admin_header.php";
                             Welcome to Admin
                             <small> <?php echo $_SESSION['username'] ;?></small>
                         </h1>
-
-                               
-                <!-- /.row -->
-
-       
-
-
-
-
-
-<?php 
-
-
-
-
-?>
-
-
-
-
 <div class="row">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">

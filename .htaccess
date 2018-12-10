@@ -1,0 +1,11 @@
+
+RewriteEngine on 
+
+
+#si on trouve index ou ... en concatiner avec .php
+RewriteRule ^(index|contact|registration|login)$ $1.php [NC,L]
+#RewriteRule ^(admin/index|admin/categories|)$ $1.php [NC,L]
+
+RewriteRule ^post/(\d+)$ post.php?p_id=$1 [NC,L]
+
+RewriteRule ^category/(\d+)$ category.php?category=$1 [NC,L]

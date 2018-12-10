@@ -15,10 +15,11 @@
     <title>Blog Post - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/blog-post.css" rel="stylesheet">
+    <!--  apres la config-->
+    <link href="/css/blog-post.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,7 +42,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.php">CMS FRONT</a>
+                <a class="navbar-brand" href="/">CMS FRONT</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,18 +52,19 @@
                     $dispalay_all = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($dispalay_all)) {
                         $cat_title = $row['cat_title'];
-                        echo "<li><a href='#'>{$cat_title}</a></li>";
+                        $cat_id = $row['cat_id'] ;
+                        echo "<li><a href='/category/$cat_id'>{$cat_title}</a></li>";
                     }
                     if (isset($_SESSION['username'])) {
                         if (isset($_GET['p_id'])) {
                             $the_pst_id = $_GET['p_id'];
-                            echo "<li> <a href='admin/posts.php?source=edit_post&id_p={$the_pst_id}'>Edit Post</a> </li>";
+                            echo "<li> <a href='/admin/posts.php?source=edit_post&id_p={$the_pst_id}'>Edit Post</a> </li>";
                         }
                     }
                     ?>
                     <?php 
                     if (isset($_SESSION['username'])) {
-                        echo "<li> <a href='admin'>Admin</a> </li>";
+                        echo "<li> <a href='/admin'>Admin</a> </li>";
                     }
                     ?>
                       <!--
@@ -120,7 +122,7 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
-                <img class="img-responsive" src="admin/images/<?php echo $post_img ; ?>" alt="">
+                <img class="img-responsive" src="/admin/images/<?php echo $post_img ; ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
                 <hr>
@@ -155,7 +157,7 @@
         ?>
             </div>
             <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-4">
+            <div class="col-md-4"> 
                 <!-- Blog Search Well -->
                 <div class="well">
                     <h4>Blog Search</h4>

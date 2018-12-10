@@ -5,7 +5,6 @@
 <?php
 function users_online(){
     global $connection;
-
         $session = session_id() ;
         $time = time() ;
         $time_out_in_secend = 05 ;
@@ -25,7 +24,6 @@ function users_online(){
 
         $find_online_user = mysqli_query($connection , "SELECT * FROM online_users WHERE time < '$time_out'");
         return $count_online_user= mysqli_num_rows($find_online_user) ;
-
 }
 
 
@@ -91,7 +89,6 @@ function count_cond($table , $prt , $condi){
       return mysqli_num_rows($select_draft_posts);
 
 }
-
 
 
 

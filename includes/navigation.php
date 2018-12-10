@@ -9,7 +9,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.php">CMS FRONT</a>
+              <!-- apres  regex 10/10  en peut mettre /index ou / with php -->
+                <a class="navbar-brand" href="/">CMS FRONT</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -24,11 +25,13 @@
                    $category_class = '' ;
                    $registration_class = '' ;
                    $contact_class = '' ;
+                   $login_class = '' ;
 
                    
                   $pageName = basename($_SERVER['PHP_SELF']);
                    $registration = "registration.php" ;
                    $contact = "contact.php" ;
+                   $login = "login.php" ;
 
                     if(isset($_GET['category']) && $_GET['category'] == $cat_id ){
                         $category_class = 'active' ;
@@ -39,24 +42,23 @@
                   else if($pageName == $contact){
                     $contact_class = 'active' ;
               }
-                   echo "<li class='$category_class'><a href='category.php?category=$cat_id'>{$cat_title}</a></li>" ;
+              else if($pageName == $login){
+                $login_class = 'active' ;
+             }
+                   echo "<li class='$category_class'><a href='/category/$cat_id'>{$cat_title}</a></li>" ;
                }
-               if(!isset($_SESSION['user_role'])=='admin' ){
-                       echo "<li class='$registration_class'> <a href='registration.php'>Registration</a> </li>" ;
-                      echo" <li  class='$contact_class'><a href='contact.php'>Contact</a></li>" ;
-
-
+               if(!IsAdmin()){
+                      // en peut mettre contect sans .php apres .htaccess
+                       echo "<li class='$registration_class'> <a href='registration'>Registration</a> </li>" ;
+                       echo" <li  class='$login_class'><a href='./login.php'>Login</a></li>" ;
+                       echo" <li  class='$contact_class'><a href='contact'>Contact</a></li>" ;
                }
-
-      ?>
+                ?>
                     <?php  
-                    
-                     if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ){
-                       echo "<li> <a href='admin'>Admin</a> </li>" ;
+                    if(IsAdmin()){
+                       echo "<li> <a href='/admin'>Admin</a> </li>" ;
                     }
                     ?>
-                 
-                   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -4,6 +4,7 @@ include "includes/header.php";
 // Navigation 
 include "includes/db.php";
 include "includes/navigation.php";
+
 ?>
   <!-- Page Content -->
     <div class="container">
@@ -25,7 +26,7 @@ include "includes/navigation.php";
              else {
                  $page_1 = ($page * 5) - 5 ; 
             }
-            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] =='admin' ){
+            if(IsAdmin()){
               $query = "SELECT * FROM posts  LIMIT {$page_1} , {$page_limit}" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
               $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
@@ -49,7 +50,7 @@ include "includes/navigation.php";
                 </h1>
                 <!-- First Blog Post -->
                 <h2>
-                    <a href="post.php?p_id=<?php echo $post_id ; ?>"><?php echo $post_title ?></a>
+                    <a href="post/<?php echo $post_id ; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
                     by
@@ -76,7 +77,7 @@ include "includes/navigation.php";
                }}
             }
 
-            elseif(!$_SESSION['user_role'] =='admin' ){
+            elseif(!IsAdmin()){
              
                 $query = "SELECT * FROM posts   WHERE post_status = 'published' LIMIT {$page_1} , {$page_limit}" ;
                 $dispalay_all_posts = mysqli_query($connection , $query);

@@ -4,7 +4,6 @@ include "includes/header.php";
 // Navigation 
 include "includes/db.php";
 include "includes/navigation.php";
- 
 
 ?>
   <!-- Page Content -->
@@ -15,15 +14,12 @@ include "includes/navigation.php";
             <?php 
             if(isset($_GET['category'])){
                $id_cat = $_GET['category'] ;
-               if(isset($_SESSION['user_role']) && $_SESSION['user_role'] =='admin' ){
-                $query = "SELECT * FROM posts   WHERE  post_category_id = {$id_cat} " ;
-                  
+               if(IsAdmin()){
+                $query = "SELECT * FROM posts WHERE post_category_id ={$id_cat}" ;
                 $dispalay_all_posts = mysqli_query($connection , $query);
                 $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
-              
-                   if($post_count > 0){
-  
-                 while($row = mysqli_fetch_assoc($dispalay_all_posts)){
+                if($post_count > 0){
+                  while($row = mysqli_fetch_assoc($dispalay_all_posts)){
                      $post_id = $row['post_id'] ;
                      $post_title = $row['post_title'] ;
                      $post_author = $row['post_author'] ;
@@ -34,11 +30,8 @@ include "includes/navigation.php";
                      $post_img = $row['post_image'] ;
                      $post_status = $row['post_status'] ;
                  }
-
                  ?>
-
-
-                 <h1 class="page-header">
+         <h1 class="page-header">
             Page Heading
             <small>Secondary Text</small>
         </h1>
@@ -59,24 +52,19 @@ include "includes/navigation.php";
         </p>
         <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
         <hr>
-        <img class="img-responsive" src="admin/images/<?php echo $post_img ;?>" alt="">
+        <img class="img-responsive" src="/admin/images/<?php echo $post_img ;?>" alt="">
         <hr>
         <p><?php echo $post_content ?></p>
         <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
         <hr>
-
-                 <?php
-               }   
-               
-               
+         <?php
+             }   
             else {
-                echo "<h1>No Categories</h1> " ;
+             echo "<h1>No Categories</h1> " ;
             }
-              
             }
-
             else {
-              $query = "SELECT * FROM posts   WHERE  post_category_id = {$id_cat} and post_status = 'published'" ;
+              $query = "SELECT * FROM posts WHERE post_category_id = {$id_cat} and post_status = 'published'" ;
               $dispalay_all_posts = mysqli_query($connection , $query);
               $post_count = mysqli_num_rows( $dispalay_all_posts ) ;
                 if($post_count > 0){
@@ -92,11 +80,6 @@ include "includes/navigation.php";
                         $post_status = $row['post_status'] ;
                     }
              ?>
-
-
-
-
-
                  <h1 class="page-header">
             Page Heading
             <small>Secondary Text</small>

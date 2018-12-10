@@ -91,6 +91,45 @@ function login_user(){
    
 }
 
+function redirect($location){
+    header("Location:" . $location);
+    exit ;
+}
+
+function ifItIsMethod($method = null){
+  if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
+      return true ;
+  }
+  else {
+      return false ;
+  }
+}
+
+
+
+function IsAdmin(){
+    if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+        return true ;
+    }
+    else  {
+        return false ;
+    }
+}
+
+function isLoggedIn(){
+    if(isset($_SESSION['user_role'])){
+        return true ;
+    }
+    else  {
+        return false ;
+    }
+}
+
+function checkIfLoginAndRedirct($location = null){
+    if(isLoggedIn()){
+        redirect($location) ;
+    }
+}
 
 
 
